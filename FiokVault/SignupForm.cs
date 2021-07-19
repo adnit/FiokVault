@@ -51,9 +51,7 @@ namespace FiokVault
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            this.Hide();
-            LoginForm loginForm = new LoginForm();
-            loginForm.Show();
+            this.Dispose();
         }
     }
 }
