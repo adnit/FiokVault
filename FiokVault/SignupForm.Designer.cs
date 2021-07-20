@@ -29,26 +29,27 @@ namespace FiokVault
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.password = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.usernameTxt = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.button1 = new System.Windows.Forms.Button();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.signupBtn = new System.Windows.Forms.Button();
+            this.confirmPw = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
+            this.result = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // textBox2
+            // password
             // 
-            this.textBox2.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox2.Location = new System.Drawing.Point(24, 205);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.PasswordChar = '*';
-            this.textBox2.Size = new System.Drawing.Size(246, 23);
-            this.textBox2.TabIndex = 11;
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.password.BackColor = System.Drawing.SystemColors.Window;
+            this.password.Location = new System.Drawing.Point(24, 205);
+            this.password.Name = "password";
+            this.password.PasswordChar = '*';
+            this.password.Size = new System.Drawing.Size(246, 23);
+            this.password.TabIndex = 11;
+            this.password.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
             // label3
             // 
@@ -61,14 +62,14 @@ namespace FiokVault
             this.label3.Text = "Password";
             this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
-            // textBox1
+            // usernameTxt
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Location = new System.Drawing.Point(24, 145);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(246, 23);
-            this.textBox1.TabIndex = 9;
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.usernameTxt.BackColor = System.Drawing.SystemColors.Window;
+            this.usernameTxt.Location = new System.Drawing.Point(24, 145);
+            this.usernameTxt.Name = "usernameTxt";
+            this.usernameTxt.Size = new System.Drawing.Size(246, 23);
+            this.usernameTxt.TabIndex = 9;
+            this.usernameTxt.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // label2
             // 
@@ -104,25 +105,25 @@ namespace FiokVault
             this.linkLabel1.Text = "Already have account? Log in";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // button1
+            // signupBtn
             // 
-            this.button1.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Location = new System.Drawing.Point(71, 313);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(151, 39);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "Sign up";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.signupBtn.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.signupBtn.Location = new System.Drawing.Point(71, 313);
+            this.signupBtn.Name = "signupBtn";
+            this.signupBtn.Size = new System.Drawing.Size(151, 39);
+            this.signupBtn.TabIndex = 6;
+            this.signupBtn.Text = "Sign up";
+            this.signupBtn.UseVisualStyleBackColor = true;
+            this.signupBtn.Click += new System.EventHandler(this.button1_Click);
             // 
-            // textBox3
+            // confirmPw
             // 
-            this.textBox3.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox3.Location = new System.Drawing.Point(24, 265);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.PasswordChar = '*';
-            this.textBox3.Size = new System.Drawing.Size(246, 23);
-            this.textBox3.TabIndex = 14;
+            this.confirmPw.BackColor = System.Drawing.SystemColors.Window;
+            this.confirmPw.Location = new System.Drawing.Point(24, 265);
+            this.confirmPw.Name = "confirmPw";
+            this.confirmPw.PasswordChar = '*';
+            this.confirmPw.Size = new System.Drawing.Size(246, 23);
+            this.confirmPw.TabIndex = 14;
             // 
             // label4
             // 
@@ -134,18 +135,29 @@ namespace FiokVault
             this.label4.TabIndex = 13;
             this.label4.Text = "Confirm password";
             // 
+            // result
+            // 
+            this.result.AutoSize = true;
+            this.result.Location = new System.Drawing.Point(36, 404);
+            this.result.Name = "result";
+            this.result.Size = new System.Drawing.Size(38, 15);
+            this.result.TabIndex = 15;
+            this.result.Text = "label5";
+            this.result.Click += new System.EventHandler(this.result_Click);
+            // 
             // SignupForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(294, 449);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.result);
+            this.Controls.Add(this.confirmPw);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabel1);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.signupBtn);
+            this.Controls.Add(this.password);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.usernameTxt);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "SignupForm";
@@ -156,14 +168,15 @@ namespace FiokVault
         }
 
         #endregion
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox usernameTxt;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button signupBtn;
+        private System.Windows.Forms.TextBox confirmPw;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label result;
     }
 }
