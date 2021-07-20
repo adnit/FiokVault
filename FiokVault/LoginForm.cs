@@ -32,5 +32,10 @@ namespace FiokVault
             signupForm.Dispose();
             Show();
         }
+
+        private void usernameTxt_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
