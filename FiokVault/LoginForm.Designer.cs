@@ -64,6 +64,7 @@ namespace FiokVault
             this.usernameTxt.BackColor = System.Drawing.SystemColors.Window;
             this.usernameTxt.Location = new System.Drawing.Point(25, 179);
             this.usernameTxt.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.usernameTxt.MaxLength = 30;
             this.usernameTxt.Name = "usernameTxt";
             this.usernameTxt.Size = new System.Drawing.Size(281, 27);
             this.usernameTxt.TabIndex = 2;
@@ -78,6 +79,7 @@ namespace FiokVault
             this.passwordTxt.PasswordChar = '*';
             this.passwordTxt.Size = new System.Drawing.Size(281, 27);
             this.passwordTxt.TabIndex = 4;
+            this.passwordTxt.TextChanged += new System.EventHandler(this.passwordTxt_TextChanged);
             // 
             // label3
             // 
@@ -99,6 +101,7 @@ namespace FiokVault
             this.loginBtn.TabIndex = 0;
             this.loginBtn.Text = "Login";
             this.loginBtn.UseVisualStyleBackColor = true;
+            this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
             // 
             // createAccountLbl
             // 
