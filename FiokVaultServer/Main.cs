@@ -4,6 +4,8 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -18,7 +20,7 @@ namespace FiokVaultServer
     {
         private TCPConnection connection;
         private Thread listeningThread;
-        private String IPAddress;
+        private String ipAddress;
         public Main()
         {
             InitializeComponent();
@@ -28,11 +30,9 @@ namespace FiokVaultServer
         {
             if (CheckIP(mtbAddress.Text))
             {
-
-                connection = new TCPConnection(IPAddress,txtServerOutput);
+                connection = new TCPConnection(ipAddress, txtServerOutput, lbClientIP);
 
                 connection.StartServer();
-
 
                 listeningThread = new Thread(new ThreadStart(connection.StartListening));
                 listeningThread.IsBackground = true;
@@ -53,10 +53,10 @@ namespace FiokVaultServer
             address = Regex.Replace(address, @"\s+", "");
 
             //Check if IP is proper
-            Match match = Regex.Match(address, "^\\d{0,3}.\\d{0,3}.\\d{0,3}.\\d{0,3}:\\d{0,5}$", RegexOptions.IgnoreCase);
+            Match match = Regex.Match(address, "^\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}:\\d{1,5}$", RegexOptions.IgnoreCase);
             if (match.Success)
             {
-                IPAddress = address;
+                ipAddress = address;
                 return true;
             }
             return false;
@@ -70,6 +70,33 @@ namespace FiokVaultServer
                 listeningThread.Interrupt();
                 btnStartServer.Enabled = true;
                 btnStopServer.Enabled = false;
+            }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            if (connection == null)
+                return;
+            try
+            {
+                var port = Int32.Parse(ipAddress.Split(':')[1]);
+                TcpClient client = new TcpClient(ipAddress.Split(':')[0], port);
+            }
+            catch (ArgumentNullException err)
+            {
+                Console.WriteLine("ArgumentNullException: {0}", err);
+            }
+        }
+
+        private void btnClientDisconnect_Click(object sender, EventArgs e)
+        {
+            int index = lbClientIP.SelectedIndex;
+            if (lbClientIP.Items.Count > 0 && index >= 0)
+            {
+                txtServerOutput.AppendText("Disconnected " + lbClientIP.Items[index] + "\r\n");
+                lbClientIP.Items.RemoveAt(index);
+                connection.RemoveClient(index);
+               
             }
         }
     }

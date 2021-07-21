@@ -72,7 +72,7 @@ namespace FiokVaultServer
             this.mtbAddress.Mask = "990\\.990\\.990\\.990\\:99990";
             this.mtbAddress.Name = "mtbAddress";
             this.mtbAddress.Size = new System.Drawing.Size(334, 23);
-            this.mtbAddress.TabIndex = 6;
+            this.mtbAddress.TabIndex = 1;
             // 
             // txtServerOutput
             // 
@@ -91,7 +91,7 @@ namespace FiokVaultServer
             this.btnStopServer.Location = new System.Drawing.Point(181, 320);
             this.btnStopServer.Name = "btnStopServer";
             this.btnStopServer.Size = new System.Drawing.Size(75, 23);
-            this.btnStopServer.TabIndex = 5;
+            this.btnStopServer.TabIndex = 4;
             this.btnStopServer.Text = "Stop";
             this.btnStopServer.UseVisualStyleBackColor = true;
             this.btnStopServer.Click += new System.EventHandler(this.btnStopServer_Click);
@@ -111,9 +111,10 @@ namespace FiokVaultServer
             this.btnCopy.Location = new System.Drawing.Point(3, 320);
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(85, 23);
-            this.btnCopy.TabIndex = 7;
+            this.btnCopy.TabIndex = 5;
             this.btnCopy.Text = "Copy";
             this.btnCopy.UseVisualStyleBackColor = true;
+            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
             // pnlClient
             // 
@@ -123,7 +124,7 @@ namespace FiokVaultServer
             this.pnlClient.Location = new System.Drawing.Point(360, 12);
             this.pnlClient.Name = "pnlClient";
             this.pnlClient.Size = new System.Drawing.Size(253, 346);
-            this.pnlClient.TabIndex = 1;
+            this.pnlClient.TabIndex = 6;
             // 
             // lblClient
             // 
@@ -131,7 +132,7 @@ namespace FiokVaultServer
             this.lblClient.Location = new System.Drawing.Point(4, 32);
             this.lblClient.Name = "lblClient";
             this.lblClient.Size = new System.Drawing.Size(38, 15);
-            this.lblClient.TabIndex = 1;
+            this.lblClient.TabIndex = 6;
             this.lblClient.Text = "Client";
             // 
             // lbClientIP
@@ -141,16 +142,17 @@ namespace FiokVaultServer
             this.lbClientIP.Location = new System.Drawing.Point(4, 55);
             this.lbClientIP.Name = "lbClientIP";
             this.lbClientIP.Size = new System.Drawing.Size(242, 259);
-            this.lbClientIP.TabIndex = 3;
+            this.lbClientIP.TabIndex = 7;
             // 
             // btnClientDisconnect
             // 
             this.btnClientDisconnect.Location = new System.Drawing.Point(171, 320);
             this.btnClientDisconnect.Name = "btnClientDisconnect";
             this.btnClientDisconnect.Size = new System.Drawing.Size(75, 23);
-            this.btnClientDisconnect.TabIndex = 2;
+            this.btnClientDisconnect.TabIndex = 8;
             this.btnClientDisconnect.Text = "Disconnect";
             this.btnClientDisconnect.UseVisualStyleBackColor = true;
+            this.btnClientDisconnect.Click += new System.EventHandler(this.btnClientDisconnect_Click);
             // 
             // Main
             // 
