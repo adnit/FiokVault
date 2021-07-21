@@ -30,7 +30,8 @@ namespace FiokVault
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            
+            validatePw();
+            validateUserName();
         }
 
         private void validatePw()
@@ -41,7 +42,7 @@ namespace FiokVault
                 signupBtn.Enabled = false;
             }else if(password.Text.Length < 6)
             {
-                warning.Text = "Fjalekalimi duhet te kete 6 ose me shume karaktere";
+                warning.Text = "Fjalekalimi duhet te kete\n6 ose me shume karaktere";
                 signupBtn.Enabled = false;
             }
             else
@@ -60,7 +61,7 @@ namespace FiokVault
             Match userRgMatch = userRg.Match(username);
             if (!userRgMatch.Success && username.Length>0)
             {
-                warning.Text = "Username duhet te kete vetem shkronja dhe numra";
+                warning.Text = "Username duhet te kete\nvetem shkronja dhe numra";
                 signupBtn.Enabled = false;
             }
             else

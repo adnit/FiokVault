@@ -99,7 +99,7 @@ namespace FiokVault
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.linkLabel1.Location = new System.Drawing.Point(55, 485);
+            this.linkLabel1.Location = new System.Drawing.Point(55, 496);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(232, 20);
             this.linkLabel1.TabIndex = 12;
@@ -110,7 +110,7 @@ namespace FiokVault
             // signupBtn
             // 
             this.signupBtn.Font = new System.Drawing.Font("Century Gothic", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.signupBtn.Location = new System.Drawing.Point(81, 417);
+            this.signupBtn.Location = new System.Drawing.Point(81, 428);
             this.signupBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.signupBtn.Name = "signupBtn";
             this.signupBtn.Size = new System.Drawing.Size(173, 52);
@@ -142,11 +142,11 @@ namespace FiokVault
             // 
             // warning
             // 
-            this.warning.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.warning.Font = new System.Drawing.Font("Century Gothic", 8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.warning.ForeColor = System.Drawing.Color.Red;
-            this.warning.Location = new System.Drawing.Point(27, 394);
+            this.warning.Location = new System.Drawing.Point(27, 384);
             this.warning.Name = "warning";
-            this.warning.Size = new System.Drawing.Size(281, 19);
+            this.warning.Size = new System.Drawing.Size(281, 37);
             this.warning.TabIndex = 15;
             this.warning.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.warning.Click += new System.EventHandler(this.warning_Click);
