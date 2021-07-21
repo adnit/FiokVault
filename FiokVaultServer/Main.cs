@@ -29,11 +29,11 @@ namespace FiokVaultServer
             if (CheckIP(mtbAddress.Text))
             {
 
-                connection = new TCPConnection(IPAddress);
-                PrintLine("Starting server!");
+                connection = new TCPConnection(IPAddress,txtServerOutput);
+
                 connection.StartServer();
 
-                PrintLine("Listening for connections...");
+
                 listeningThread = new Thread(new ThreadStart(connection.StartListening));
                 listeningThread.IsBackground = true;
                 listeningThread.Start();
@@ -43,9 +43,10 @@ namespace FiokVaultServer
             }
             else
             {
-                MessageBox.Show("invalid ip");
+                MessageBox.Show("Invalid IP address!");
             }
         }
+
         private bool CheckIP(String address)
         {
             //Remove blank spaces from the IP
@@ -60,16 +61,11 @@ namespace FiokVaultServer
             }
             return false;
         }
-        public void PrintLine(String text)
-        {
-            txtServerOutput.AppendText(text + "\r\n");
-        }
 
         private void btnStopServer_Click(object sender, EventArgs e)
         {
             if (connection != null)
             {
-                PrintLine("Stopping the server!");
                 connection.StopServer();
                 listeningThread.Interrupt();
                 btnStartServer.Enabled = true;

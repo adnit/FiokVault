@@ -30,39 +30,47 @@ namespace FiokVaultServer
         private void InitializeComponent()
         {
             this.pnlServer = new System.Windows.Forms.Panel();
+            this.lblServer = new System.Windows.Forms.Label();
             this.mtbAddress = new System.Windows.Forms.MaskedTextBox();
             this.txtServerOutput = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
             this.btnStartServer = new System.Windows.Forms.Button();
-            this.lblServer = new System.Windows.Forms.Label();
+            this.btnCopy = new System.Windows.Forms.Button();
             this.pnlClient = new System.Windows.Forms.Panel();
             this.lblClient = new System.Windows.Forms.Label();
             this.lbClientIP = new System.Windows.Forms.ListBox();
             this.btnClientDisconnect = new System.Windows.Forms.Button();
-            this.btnCopy = new System.Windows.Forms.Button();
             this.pnlServer.SuspendLayout();
             this.pnlClient.SuspendLayout();
             this.SuspendLayout();
             // 
             // pnlServer
             // 
-            this.pnlServer.Controls.Add(this.btnCopy);
+            this.pnlServer.Controls.Add(this.lblServer);
             this.pnlServer.Controls.Add(this.mtbAddress);
             this.pnlServer.Controls.Add(this.txtServerOutput);
             this.pnlServer.Controls.Add(this.btnStopServer);
             this.pnlServer.Controls.Add(this.btnStartServer);
-            this.pnlServer.Controls.Add(this.lblServer);
+            this.pnlServer.Controls.Add(this.btnCopy);
             this.pnlServer.Location = new System.Drawing.Point(12, 12);
             this.pnlServer.Name = "pnlServer";
             this.pnlServer.Size = new System.Drawing.Size(342, 346);
             this.pnlServer.TabIndex = 0;
+            // 
+            // lblServer
+            // 
+            this.lblServer.AutoSize = true;
+            this.lblServer.Location = new System.Drawing.Point(3, 7);
+            this.lblServer.Name = "lblServer";
+            this.lblServer.Size = new System.Drawing.Size(39, 15);
+            this.lblServer.TabIndex = 0;
+            this.lblServer.Text = "Server";
             // 
             // mtbAddress
             // 
             this.mtbAddress.Location = new System.Drawing.Point(3, 26);
             this.mtbAddress.Mask = "990\\.990\\.990\\.990\\:99990";
             this.mtbAddress.Name = "mtbAddress";
-            this.mtbAddress.PromptChar = '0';
             this.mtbAddress.Size = new System.Drawing.Size(334, 23);
             this.mtbAddress.TabIndex = 6;
             // 
@@ -70,7 +78,6 @@ namespace FiokVaultServer
             // 
             this.txtServerOutput.AcceptsReturn = true;
             this.txtServerOutput.AcceptsTab = true;
-            this.txtServerOutput.Enabled = false;
             this.txtServerOutput.Location = new System.Drawing.Point(3, 55);
             this.txtServerOutput.Multiline = true;
             this.txtServerOutput.Name = "txtServerOutput";
@@ -99,14 +106,14 @@ namespace FiokVaultServer
             this.btnStartServer.UseVisualStyleBackColor = true;
             this.btnStartServer.Click += new System.EventHandler(this.btnStartServer_Click);
             // 
-            // lblServer
+            // btnCopy
             // 
-            this.lblServer.AutoSize = true;
-            this.lblServer.Location = new System.Drawing.Point(3, 7);
-            this.lblServer.Name = "lblServer";
-            this.lblServer.Size = new System.Drawing.Size(39, 15);
-            this.lblServer.TabIndex = 0;
-            this.lblServer.Text = "Server";
+            this.btnCopy.Location = new System.Drawing.Point(3, 320);
+            this.btnCopy.Name = "btnCopy";
+            this.btnCopy.Size = new System.Drawing.Size(85, 23);
+            this.btnCopy.TabIndex = 7;
+            this.btnCopy.Text = "Copy";
+            this.btnCopy.UseVisualStyleBackColor = true;
             // 
             // pnlClient
             // 
@@ -145,22 +152,13 @@ namespace FiokVaultServer
             this.btnClientDisconnect.Text = "Disconnect";
             this.btnClientDisconnect.UseVisualStyleBackColor = true;
             // 
-            // btnCopy
-            // 
-            this.btnCopy.Location = new System.Drawing.Point(3, 320);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(85, 23);
-            this.btnCopy.TabIndex = 7;
-            this.btnCopy.Text = "Copy";
-            this.btnCopy.UseVisualStyleBackColor = true;
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(622, 370);
-            this.Controls.Add(this.pnlClient);
             this.Controls.Add(this.pnlServer);
+            this.Controls.Add(this.pnlClient);
             this.Name = "Main";
             this.Text = "Main";
             this.pnlServer.ResumeLayout(false);
