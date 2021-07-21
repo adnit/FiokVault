@@ -28,73 +28,53 @@ namespace FiokVault
         {
 
         }
-
         private void button1_Click(object sender, EventArgs e)
         {
-            sendUserInfo();
+            
+        }
+
+        private void validatePw()
+        {
+            if(password.Text != confirmPw.Text)
+            {
+                warning.Text = "Fjalekalimi duhet te jete i njejte";
+                signupBtn.Enabled = false;
+            }else if(password.Text.Length < 6)
+            {
+                warning.Text = "Fjalekalimi duhet te kete 6 ose me shume karaktere";
+                signupBtn.Enabled = false;
+            }
+            else
+            {
+                warning.Text = "";
+                signupBtn.Enabled = true;
+            }
+        }
+
+        private void validateUserName()
+        {
             var usernameRg = "^[a-zA-Z0-9]+$";
             var username = usernameTxt.Text;
 
             Regex userRg = new Regex(usernameRg);
             Match userRgMatch = userRg.Match(username);
-            if (userRgMatch.Success)
+            if (!userRgMatch.Success && username.Length>0)
             {
-                if(password.Text == confirmPw.Text)
-                {
-                    sendUserInfo();
-                }
+                warning.Text = "Username duhet te kete vetem shkronja dhe numra";
+                signupBtn.Enabled = false;
+            }
+            else
+            {
+                warning.Text = "";
+                signupBtn.Enabled = true;
             }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-
+            validatePw();
         }
-        public const int SALT_SIZE = 16; // size in bytes
-        public const int HASH_SIZE = 16; // size in bytes
-        public const int ITERATIONS = 100000; // number of pbkdf2 iterations
-
-        private void SaveInfo()
-        {
-
-            XDocument xmlDocument = XDocument.Load("FiokVault.xml");
-            try
-            {
-                var root = xmlDocument.Root;
-                var pages = root.Elements("User");
-                var mypage = pages.Where(p => p.Attribute("salt").Value == "kripa").FirstOrDefault();
-                XElement xNewChild = 
-                    new XElement("User",
-                    new XAttribute("username", "johndoe"),
-                    new XAttribute("salt", "kripa"),
-                    new XAttribute("hash", "hashi"));
-
-                mypage.AddAfterSelf(xNewChild);
-                xmlDocument.Save("FiokVault.xml");
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.Message);
-            }
-        }
-
-        public static byte[] CreateHash(string input)
-        {
-            RNGCryptoServiceProvider provider = new ();
-            byte[] salt = new byte[SALT_SIZE];
-            provider.GetBytes(salt);
-
-            Rfc2898DeriveBytes pbkdf2 = new(input, salt, ITERATIONS);
-            return pbkdf2.GetBytes(HASH_SIZE);
-            // return salt;
-        }
-        private void sendUserInfo()
-        {
-            var str = Convert.ToBase64String(CreateHash("adnit"));
-            result.Text = str;
-            SaveInfo();
-        }
-
+       
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -102,7 +82,7 @@ namespace FiokVault
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+            validateUserName();
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -118,6 +98,16 @@ namespace FiokVault
         private void result_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void warning_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void confirmPw_TextChanged(object sender, EventArgs e)
+        {
+            validatePw();
         }
     }
 }
