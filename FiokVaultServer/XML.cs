@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace FiokVaultServer
 {
@@ -15,15 +16,27 @@ namespace FiokVaultServer
         {
             DataSet dataSet = new DataSet();
             dataSet.ReadXml(url, XmlReadMode.InferSchema);
-            foreach (DataTable db in dataSet.Tables)
-            {
-                foreach (DataRow row in db.Rows)
-                {
-                  Debug.Write(row["name"].ToString() + row["surname"].ToString());
+            Debug.WriteLine("\n" + dataSet.Tables.Count.ToString() + "\n");
+            DataTable table = dataSet.Tables["User"];
 
-                }
+            foreach (DataRow row in table.Rows)
+            {
+                User user = new User();
+                user.firstName = row["name"].ToString();
+                user.lastName = row["surname"].ToString();
+                user.username = row["username"].ToString();
+                user.gjinia = row["gjinia"].ToString()[0];
+                user.password = row["hashedpw"].ToString();
+                users.Add(user);
             }
+
+            table = dataSet.Tables["Shpenzimet"];
         }
+
+        //private List<Shpenzimet> GetShpenzimet(int index)
+        //{
+
+        //}
         public void RegisterUser(String username, String password)
         {
 

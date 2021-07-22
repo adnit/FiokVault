@@ -8,10 +8,11 @@ using System.Threading.Tasks;
     {
     public string firstName { get; set; }
     public string lastName { get; set; }
+    public string username { get; set; }
     public string email { get; set; }
     public string password { get; set; }
     
-    public Gjinia gjinia { get; set; }
+    public char gjinia { get; set; }
     public List<Shpenzimet> shpenzimet { get; set; }
 }
 
@@ -37,11 +38,4 @@ using System.Threading.Tasks;
 {
     Janar,
     Shkurt
-}
-
-    public enum Gjinia
-{
-    Mashkull,
-    Femer,
-    NonBinary
 }
