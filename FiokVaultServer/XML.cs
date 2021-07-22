@@ -11,7 +11,7 @@ namespace FiokVaultServer
 {
     class XML
     {
-        public List<User> users = new List<User>();
+        public static List<User> users = new List<User>();
         public XML(String url)
         {
             DataSet dataSet = new DataSet();
@@ -33,18 +33,12 @@ namespace FiokVaultServer
             table = dataSet.Tables["Shpenzimet"];
         }
 
-        //private List<Shpenzimet> GetShpenzimet(int index)
-        //{
 
-        //}
-        public void RegisterUser(String username, String password)
+        public static void XMLAddUser(User user)
         {
+            users.Add(user);
 
-        }
-
-        private void VerifyLogin() 
-        { 
-        
+            //kodin per me fut xml
         }
     }
 }
