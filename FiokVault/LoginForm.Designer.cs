@@ -36,6 +36,7 @@ namespace FiokVault
             this.label3 = new System.Windows.Forms.Label();
             this.loginBtn = new System.Windows.Forms.Button();
             this.createAccountLbl = new System.Windows.Forms.LinkLabel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // label1
@@ -67,7 +68,7 @@ namespace FiokVault
             this.usernameTxt.MaxLength = 30;
             this.usernameTxt.Name = "usernameTxt";
             this.usernameTxt.Size = new System.Drawing.Size(281, 27);
-            this.usernameTxt.TabIndex = 2;
+            this.usernameTxt.TabIndex = 0;
             this.usernameTxt.TextChanged += new System.EventHandler(this.usernameTxt_TextChanged);
             // 
             // passwordTxt
@@ -78,7 +79,7 @@ namespace FiokVault
             this.passwordTxt.Name = "passwordTxt";
             this.passwordTxt.PasswordChar = '*';
             this.passwordTxt.Size = new System.Drawing.Size(281, 27);
-            this.passwordTxt.TabIndex = 4;
+            this.passwordTxt.TabIndex = 1;
             this.passwordTxt.TextChanged += new System.EventHandler(this.passwordTxt_TextChanged);
             // 
             // label3
@@ -98,7 +99,7 @@ namespace FiokVault
             this.loginBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.loginBtn.Name = "loginBtn";
             this.loginBtn.Size = new System.Drawing.Size(173, 52);
-            this.loginBtn.TabIndex = 0;
+            this.loginBtn.TabIndex = 3;
             this.loginBtn.Text = "Login";
             this.loginBtn.UseVisualStyleBackColor = true;
             this.loginBtn.Click += new System.EventHandler(this.loginBtn_Click);
@@ -110,16 +111,25 @@ namespace FiokVault
             this.createAccountLbl.Location = new System.Drawing.Point(53, 381);
             this.createAccountLbl.Name = "createAccountLbl";
             this.createAccountLbl.Size = new System.Drawing.Size(245, 20);
-            this.createAccountLbl.TabIndex = 5;
+            this.createAccountLbl.TabIndex = 4;
             this.createAccountLbl.TabStop = true;
             this.createAccountLbl.Text = "Not registered? Create account";
             this.createAccountLbl.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Location = new System.Drawing.Point(104, 380);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(125, 29);
+            this.progressBar1.TabIndex = 5;
+            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(336, 475);
+            this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.createAccountLbl);
             this.Controls.Add(this.loginBtn);
             this.Controls.Add(this.passwordTxt);
@@ -128,6 +138,7 @@ namespace FiokVault
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
             this.Name = "LoginForm";
             this.Text = "Form1";
             this.ResumeLayout(false);
@@ -144,6 +155,7 @@ namespace FiokVault
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button loginBtn;
         private System.Windows.Forms.LinkLabel createAccountLbl;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

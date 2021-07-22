@@ -73,26 +73,6 @@ namespace FiokVault.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap refreshIcon {
-            get {
-                object obj = ResourceManager.GetObject("refreshIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap reloadIcon {
-            get {
-                object obj = ResourceManager.GetObject("reloadIcon", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap reloadIcon1 {
             get {
                 object obj = ResourceManager.GetObject("reloadIcon1", resourceCulture);
