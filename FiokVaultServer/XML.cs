@@ -22,10 +22,9 @@ namespace FiokVaultServer
         public XML(String url)
         {
             LoginUser("adni111tadnit", "adnitadnit", url);
-            RegisterUser("test@test.com", "adni111tadnit", "M", "adnitadnit", url);
-            InsertData("adni111tadnit", "BLerjeee", "20022", "janar", "2.2", url);
-            GetData(url, "adni111tadnit");
-
+            // RegisterUser("test@test.com", "adni111tadnit", "M", "adnitadnit", url);
+            // InsertData("adni111tadnit", "BLerjeee", "20022", "janar", "2.2", url);
+            // GetData(url, "adni111tadnit");
         }
 
         public void RegisterUser(string email, string username, string gjinia, string password, string url)
@@ -43,14 +42,8 @@ namespace FiokVaultServer
             string userID = Users.Count() + 1.ToString();
 
             // salti
-            RNGCryptoServiceProvider provider = new();
-            byte[] salt = new byte[SALT_SIZE];
-            provider.GetBytes(salt);
-            string saltStr = Convert.ToBase64String(salt);
 
-            // hashedpw
-            Rfc2898DeriveBytes pbkdf2 = new(password, salt, ITERATIONS);
-            string hashedpwStr = Convert.ToBase64String(pbkdf2.GetBytes(HASH_SIZE));
+            Hash newUser = new(password);
 
             if (currentUsers.Count() == 0)
             {
@@ -59,10 +52,11 @@ namespace FiokVaultServer
                   new XAttribute("email", email),
                   new XAttribute("username", username),
                   new XAttribute("gjinia", gjinia),
-                  new XAttribute("salt", saltStr),
-                  new XAttribute("hashedpw", hashedpwStr)
+                  new XAttribute("salt", newUser.salt),
+                  new XAttribute("hashedpw", newUser.hashedpw)
                 ));
                 root.Save(url);
+                newUser = null;
                 Debug.WriteLine("OK");
             }
             else
@@ -90,21 +84,17 @@ namespace FiokVaultServer
                 string userSalt = currentUsers.First().Attribute("salt").Value.ToString();
                 string hashedPw = currentUsers.First().Attribute("hashedpw").Value.ToString();
 
-                // salti
-                byte[] salt = Convert.FromBase64String(userSalt);
-                // hashedpw
-                Rfc2898DeriveBytes pbkdf2 = new(password, salt, ITERATIONS);
-                string hashedpwStr = Convert.ToBase64String(pbkdf2.GetBytes(HASH_SIZE));
+                Hash user1 = new(userSalt, hashedPw);
 
-                if (hashedPw == hashedpwStr)
+                if (user1.CheckUser(password))
                 {
+                    user1 = null;
                     Debug.WriteLine("OK");
-
                 }
                 else
                 {
+                    user1 = null;
                     Debug.WriteLine("ERROR");
-
                 }
 
             }
