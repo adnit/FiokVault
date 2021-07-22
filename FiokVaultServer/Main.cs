@@ -25,6 +25,7 @@ namespace FiokVaultServer
         {
             InitializeComponent();
             new XML("Users.xml");
+            MessageBox.Show(Convert.ToBase64String(Hash.CreateHash("Kari")));
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)

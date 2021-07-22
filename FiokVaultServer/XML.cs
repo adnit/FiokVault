@@ -20,68 +20,10 @@ namespace FiokVaultServer
         public const int ITERATIONS = 100000;
         public XML(String url)
         {
-            //  XElement root = XElement.Load(url);
-            //  RegisterUser("sdsdsd", url);
-            RegisterUser("adnit@brazzers.com", "adnitbishaotr", "M", "adnit123", url);
-
-         //   IEnumerable<XElement> address =
-         //       from el in root.Elements("User")
-         //       where (string)el.Attribute("username") == "joh2ndoe"
-         //       select el;
-         //
-         //   IEnumerable<XElement> shpenzimet = address.Elements("Shpenzimet").Elements("Shpenzimi");
-         //   foreach (XElement el in shpenzimet)
-         //   {
-         //       Debug.WriteLine(el);
-         //   }
-
-        }
-
-        public void RegisterUser(string email, string username, string gjinia, string password, string url)
-        {
-            XElement root = XElement.Load(url);
-            IEnumerable<XElement> Users = root.Elements("User");
-
-            // e kqyr a ka user me kit username
-            IEnumerable<XElement> currentUsers =
-                from el in Users
-                where (string)el.Attribute("username") == username
-                select el;
-
-            // userid
-            string userID = Users.Count()+1.ToString();
-
-            // salti
-            RNGCryptoServiceProvider provider = new();
-            byte[] salt = new byte[SALT_SIZE];
-            provider.GetBytes(salt);
-            string saltStr = Convert.ToBase64String(salt);
-
-            // hashedpw
-            Rfc2898DeriveBytes pbkdf2 = new(password, salt, ITERATIONS);
-            string hashedpwStr = Convert.ToBase64String(pbkdf2.GetBytes(HASH_SIZE));
-            
-            if (currentUsers.Count() == 0)
-            {
-                root.Add(new XElement("User",
-                    new XAttribute("userid", userID),
-                    new XAttribute("email", email),
-                    new XAttribute("username", username),
-                    new XAttribute("gjinia", gjinia),
-                    new XAttribute("salt", saltStr),
-                    new XAttribute("hashedpw", hashedpwStr)
-                    ));
-                root.Save(url);
-            }
-            else
-            {
-                // 
-            }
-        }
-        public void LoginUser(string username, string password, string url)
-        {
-            XElement root = XElement.Load(url);
-            IEnumerable<XElement> Users = root.Elements("User");
+            DataSet dataSet = new DataSet();
+            dataSet.ReadXml(url, XmlReadMode.InferSchema);
+            Debug.WriteLine("\n" + dataSet.Tables.Count.ToString() + "\n");
+            DataTable table = dataSet.Tables["User"];
 
             // e kqyr a ka user me kit username
             IEnumerable<XElement> currentUsers =
@@ -92,7 +34,13 @@ namespace FiokVaultServer
             
             if (currentUsers.Count() == 0)
             {
-                // ERROR
+                User user = new User();
+                user.firstName = row["name"].ToString();
+                user.lastName = row["surname"].ToString();
+                user.username = row["username"].ToString();
+                user.gjinia = row["gjinia"].ToString()[0];
+                user.password = row["hashedpw"].ToString();
+                users.Add(user);
             }
             else
             {
