@@ -8,11 +8,26 @@ namespace FiokVaultServer
 {
     class Server
     {
-        public static void RegisterUser(String username, String password)
+        //SIGNUP?email=asdasd@ada.com&username=asdasdasd&gjinia=M&password=123123
+        public static void SignUp(String username, String password)
         {
 
         }
 
+        //INSERT?username=johndoe&tipi=Blerje&viti=2015&muaji=Mars&qmimi=2
+        public static void InsertInfo(Shpenzimet shpenzim)
+        {
+
+        }
+
+        //GETDATA?username=johndoe
+        public static List<Shpenzimet> GetInfo()
+        {
+
+            return null;
+        }
+
+        //LOGIN?username=johndoe&password=123123123
         private static bool VerifyLogin(string username, string password)
         {
             foreach(User user in XML.users)
