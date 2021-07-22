@@ -9,10 +9,10 @@ namespace FiokVault
 {
     class TCPClient
     {
-        static string hostname = "localhost";
+        static string hostname = "185.323.112.3";
         static Int32 port = 13000;
 
-        public static void sendMessage(string message)
+        public static string sendMessage(string message)
         {
             try
             { 
@@ -24,10 +24,8 @@ namespace FiokVault
             //
 
             Byte[] data = Encoding.ASCII.GetBytes(message);
-            // Byte[] data = Convert.FromBase64String(message); // nese i qet giberish
-            stream.Write(data, 0, data.Length);
-            stream.Close();
-            client.Close();
+                // Byte[] data = Convert.FromBase64String(message); // nese i qet giberish
+                stream.Write(data, 0, data.Length);
             }
             catch (ArgumentNullException e)
             {
@@ -37,39 +35,35 @@ namespace FiokVault
             {
                 throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
             }
-        }
-
-        public static string receiveMessage()
-        {
             try
-            {
-                TcpClient client = new TcpClient(hostname, port);
-                NetworkStream stream = client.GetStream();
-                Byte[] data = new Byte[256];
-                String responseData;
+                {
+                    TcpClient client = new TcpClient(hostname, port);
+                    NetworkStream stream = client.GetStream();
+                    Byte[] data = new Byte[256];
+                    String responseData;
 
-                //
-                // TODO
-                // Qetu dikun menohet me dekriptu
-                //
+                    //
+                    // TODO
+                    // Qetu dikun menohet me dekriptu
+                    //
 
-                Int32 bytes = stream.Read(data, 0, data.Length);
-                // responseData = Convert.ToBase64String(data, 0, bytes); // nese i qet giberish
-                responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                stream.Close();
-                client.Close();
-                return responseData;
-            }
-            catch (ArgumentNullException e)
-            {
-                throw new Exception("Ka ndodhur nje gabim \nMesazhi i plote: " + e.Message);
-            }
-            catch (SocketException e)
-            {
-                throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
-            }
+                    Int32 bytes = stream.Read(data, 0, data.Length);
+                    // responseData = Convert.ToBase64String(data, 0, bytes); // nese i qet giberish
+                    responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                    stream.Close();
+                    client.Close();
+                   return responseData;
+                }
+                catch (ArgumentNullException e)
+                {
+                    throw new Exception("Ka ndodhur nje gabim \nMesazhi i plote: " + e.Message);
+                }
+                catch (SocketException e)
+                {
+                    throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
+                }
 
+            }
         }
-
     }
-}
+

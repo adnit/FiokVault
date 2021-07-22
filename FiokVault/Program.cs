@@ -6,8 +6,10 @@ using System.Windows.Forms;
 
 namespace FiokVault
 {
+
     static class Program
     {
+        
         /// <summary>
         ///  The main entry point for the application.
         /// </summary>
@@ -17,7 +19,11 @@ namespace FiokVault
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FiokVault());
+            Application.Run(new LoginForm());
         }
+    }
+    static class SessionStorage
+    {
+        public static string username = "adnit";
     }
 }

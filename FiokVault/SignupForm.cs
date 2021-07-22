@@ -12,6 +12,8 @@ using System.Security.Cryptography;
 using System.Linq;
 using System.Xml.Linq;
 using System.Xml;
+using System.Diagnostics;
+
 
 namespace FiokVault
 {
@@ -19,9 +21,10 @@ namespace FiokVault
     {
         public SignupForm()
         {
+            
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
-
+            gjiniaBox.SelectedIndex = -1;
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -30,28 +33,90 @@ namespace FiokVault
         }
         private void button1_Click(object sender, EventArgs e)
         {
-            validatePw();
-            validateUserName();
+            try
+            {
+                validateEmail();
+                validateUserName();
+                validatePw();
+                validateGender();
+                sendRequest();
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
         }
 
-        private void validatePw()
+        private void sendRequest()
         {
-            if(password.Text != confirmPw.Text)
+            string command
+                    = "SIGNUP"
+                    + "?email=" + emailTxt.Text
+                    + "&username=" + usernameTxt.Text
+                    + "&gjinia=" + gjiniaBox.SelectedItem.ToString()
+                    + "&password=" + password.Text;
+            try
             {
-                warning.Text = "Fjalekalimi duhet te jete i njejte";
-                signupBtn.Enabled = false;
-            }else if(password.Text.Length < 6)
+                string response = TCPClient.sendMessage(command);
+                if (response == "OK")
+                {
+                    SessionStorage.username = usernameTxt.Text;
+                    Close();
+                }
+                else if (response == "ERROR")
+                {
+                    throw new Exception("Emri i perdoruesit ose fjalekalimi jane gabim");
+                }
+                else
+                {
+                    throw new Exception("Ka ndodhur nje gabim kontaktoni adminin");
+                }
+            }
+            catch (Exception)
             {
-                warning.Text = "Fjalekalimi duhet te kete\n6 ose me shume karaktere";
-                signupBtn.Enabled = false;
+
+                throw;
+            }
+        }
+
+        private void validateGender()
+        {
+            if(gjiniaBox.SelectedIndex != -1)
+            { 
             }
             else
             {
-                warning.Text = "";
-                signupBtn.Enabled = true;
+                throw new Exception("Zgjedhni gjinine tuaj");
             }
         }
+        private void validatePw()
+        {
+            if (password.Text != confirmPw.Text)
+            {
+                throw new Exception("Fjalekalimi duhet te jete i njejte");
+            }
+            else if (password.Text.Length < 6)
+            {
+                throw new Exception("Fjalekalimi duhet te kete\n6 ose me shume karaktere");
+            }
+        }
+        private void validateEmail()
+        {
+            var emReg = @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$";
 
+            Regex emailReg = new(emReg);
+            Match emailMatch = emailReg.Match(emailTxt.Text);
+
+            if (emailMatch.Success)
+            {
+            }
+            else
+            {
+                throw new Exception("Shkruani emailin valid");
+            }
+
+        }
         private void validateUserName()
         {
             var usernameRg = "^[a-zA-Z0-9]+$";
@@ -61,29 +126,92 @@ namespace FiokVault
             Match userRgMatch = userRg.Match(username);
             if (!userRgMatch.Success && username.Length>0)
             {
-                warning.Text = "Username duhet te kete\nvetem shkronja dhe numra";
-                signupBtn.Enabled = false;
-            }
-            else
-            {
-                warning.Text = "";
-                signupBtn.Enabled = true;
+                throw new Exception("Username duhet te kete\nvetem shkronja dhe numra");
+            }else if (username.Length == 0)
+            { 
+                throw new Exception("Ju lutem shkruani username");
             }
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            validatePw();
+
+            try
+            {
+                validatePw();
+                signupBtn.Enabled = true;
+                warning.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
+            
         }
-       
+        private void confirmPw_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                validatePw();
+                signupBtn.Enabled = true;
+                warning.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
+            
+        }
+        private void emailTxt_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                validateEmail();
+                signupBtn.Enabled = true;
+                warning.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
+            
+        }
+        private void gjiniaBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                validateGender();
+                signupBtn.Enabled = true;
+                warning.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
+            
+        }
         private void label3_Click(object sender, EventArgs e)
         {
 
         }
-
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            validateUserName();
+            try
+            {
+                validateUserName();
+                signupBtn.Enabled = true;
+                warning.Text = String.Empty;
+            }
+            catch (Exception ex)
+            {
+                signupBtn.Enabled = false;
+                warning.Text = ex.Message;
+            }
+            
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -94,21 +222,6 @@ namespace FiokVault
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             this.Close();
-        }
-
-        private void result_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void warning_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void confirmPw_TextChanged(object sender, EventArgs e)
-        {
-            validatePw();
         }
     }
 }
