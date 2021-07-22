@@ -14,18 +14,11 @@ namespace FiokVaultServer
     class XML
     {
         public
-        const int SALT_SIZE = 8;
+        const int SALT_SIZE = 16;
         public
-        const int HASH_SIZE = 8;
+        const int HASH_SIZE = 16;
         public
         const int ITERATIONS = 100000;
-        public XML(String url)
-        {
-            LoginUser("adni111tadnit", "adnitadnit", url);
-            // RegisterUser("test@test.com", "adni111tadnit", "M", "adnitadnit", url);
-            // InsertData("adni111tadnit", "BLerjeee", "20022", "janar", "2.2", url);
-            // GetData(url, "adni111tadnit");
-        }
 
         public void RegisterUser(string email, string username, string gjinia, string password, string url)
         {
