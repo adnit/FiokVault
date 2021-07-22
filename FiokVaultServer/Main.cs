@@ -24,6 +24,7 @@ namespace FiokVaultServer
         public Main()
         {
             InitializeComponent();
+            new XML("Users.xml");
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)
