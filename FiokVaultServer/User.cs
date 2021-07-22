@@ -18,13 +18,13 @@ using System.Threading.Tasks;
 
     public class Shpenzimet
 {
-    TipiShpenzimit tipi { get; set; }
+    public TipiShpenzimit tipi { get; set; }
     
-    ushort viti { get; set; }
+    public ushort viti { get; set; }
 
-    MuajiVitit muaji { get; set; }
+    public MuajiVitit muaji { get; set; }
 
-    uint cmimi { get; set; }
+    public uint cmimi { get; set; }
 
 }
 
