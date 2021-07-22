@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net;
@@ -24,8 +25,9 @@ namespace FiokVaultServer
         public Main()
         {
             InitializeComponent();
-            new XML("Users.xml");
-            MessageBox.Show(Convert.ToBase64String(Hash.CreateHash("Kari")));
+            User us = Server.GetLoginInfo("LOGIN?username=johndoe&password=johndoe");
+            
+            Debug.WriteLine("\n\n\n"+us.username +"  " + us.password+"\n\n\n");
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)

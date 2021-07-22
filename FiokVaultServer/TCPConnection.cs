@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
@@ -59,6 +60,31 @@ namespace FiokVaultServer
             PrintLine("Client connected with IP " + ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
             AddClient(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
             clients.Add(client);
+
+            string data = null;
+            Byte[] bytes = new Byte[256];
+            // Get a stream object for reading and writing
+            NetworkStream stream = client.GetStream();
+
+            int i;
+
+            // Loop to receive all the data sent by the client.
+            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            {
+                // Translate data bytes to a ASCII string.
+                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                PrintLine("Received: " + data);
+
+                // Process the data sent by the client.
+                data = data.ToUpper();
+
+                byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+
+                // Send back a response.
+                stream.Write(msg, 0, msg.Length);
+                PrintLine("Sent: " + data);
+            }
+
         }
         public void RemoveClient(int index)
         {
