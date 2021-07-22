@@ -60,29 +60,70 @@ namespace FiokVaultServer
             PrintLine("Client connected with IP " + ((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
             AddClient(((IPEndPoint)client.Client.RemoteEndPoint).Address.ToString());
             clients.Add(client);
-
-            string data = null;
-            Byte[] bytes = new Byte[256];
-            // Get a stream object for reading and writing
-            NetworkStream stream = client.GetStream();
-
-            int i;
-
-            // Loop to receive all the data sent by the client.
-            while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+            try
             {
-                // Translate data bytes to a ASCII string.
-                data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
-                PrintLine("Received: " + data);
+                string data = null;
+                Byte[] bytes = new Byte[256];
+                // Get a stream object for reading and writing
+                NetworkStream stream = client.GetStream();
 
-                // Process the data sent by the client.
-                data = data.ToUpper();
+                int i;
 
-                byte[] msg = System.Text.Encoding.ASCII.GetBytes(data);
+                // Loop to receive all the data sent by the client.
+                while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
+                {
+                    // Translate data bytes to a ASCII string.
+                    data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                    PrintLine("Received: " + data);
 
-                // Send back a response.
-                stream.Write(msg, 0, msg.Length);
-                PrintLine("Sent: " + data);
+                    string returnMessage = "";
+                    User user;
+                    switch (Server.ReadRequestType(data))
+                    {
+                        case "INSERT":
+                            Server.ReadInsertInfo(data);
+                            break;
+                        case "LOGIN":
+                            user = Server.ReadLoginInfo(data);
+                            if (Server.VerifyLogin(user))
+                                returnMessage = "OK";
+                            else
+                                returnMessage = "ERROR";
+                            break;
+                        case "SIGNUP":
+                            user = Server.ReadSignupInfo(data);
+                            //
+                            //DO REGISTER
+                            //
+                            returnMessage = "ERROR";
+                            break;
+                        case "GETDATA":
+                            Server.GetData(data);
+                            //
+                            //DO GET DATA
+                            //
+                            returnMessage = "ERROR";
+                            break;
+                        default:
+                            returnMessage = "ERROR";
+                            break;
+                    }
+
+                    byte[] response = System.Text.Encoding.ASCII.GetBytes(returnMessage);
+
+                    // Send back a response.
+                    stream.Write(response, 0, response.Length);
+                    PrintLine("Sent: " + returnMessage);
+                }
+            }
+            catch(Exception en)
+            {
+                PrintLine("Client forcefully disconnected!");
+            }
+            finally
+            {
+                RemoveClient(clients.IndexOf(client));
+                client.Close();
             }
 
         }

@@ -50,8 +50,10 @@ namespace FiokVaultServer
         }
 
         ////LOGIN?username=johndoe&password=123123123
-        private static bool VerifyLogin(string username, string password)
+        public static bool VerifyLogin(User user)
         {
+            string username = user.username;
+            string password = user.password;
             //foreach (User user in XML.users)
             //{
             if ("adnit" == username && "karmberi" == password)

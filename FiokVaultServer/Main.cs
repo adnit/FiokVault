@@ -25,9 +25,6 @@ namespace FiokVaultServer
         public Main()
         {
             InitializeComponent();
-            User us = Server.GetLoginInfo("LOGIN?username=johndoe&password=johndoe");
-            
-            Debug.WriteLine("\n\n\n"+us.username +"  " + us.password+"\n\n\n");
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)
