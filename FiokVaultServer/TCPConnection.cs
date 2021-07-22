@@ -115,6 +115,7 @@ namespace FiokVaultServer
                     stream.Write(response, 0, response.Length);
                     PrintLine("Sent: " + returnMessage);
                 }
+                client.Close();
             }
             catch(Exception en)
             {

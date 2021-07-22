@@ -81,6 +81,7 @@ namespace FiokVault
                 try
                 {
                     string response = TCPClient.sendMessage(command);
+                    MessageBox.Show(response);
                     if(response == "OK")
                     {
                         SessionStorage.username = usernameTxt.Text;
