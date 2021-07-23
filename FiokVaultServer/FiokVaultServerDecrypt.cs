@@ -14,18 +14,27 @@ namespace FiokVaultServer
 
         public byte[] decryptMessage(byte[] encryptedData)
         {
+            string decodedString = Encoding.UTF8.GetString(encryptedData);
+            String[] messages = decodedString.Split(",");
+
             using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
             {
+                byte[] message;
+                String encryptedKey = messages[1];
+
                 RSA.ImportFromPem(PrivateKeyString);
                 //Pass the data to DECRYPT, the private key information 
                 //(using RSACryptoServiceProvider.ExportParameters(true),
                 //and a boolean flag specifying no OAEP padding.
-                byte[] decryptedData = RSADecrypt(encryptedData, RSA.ExportParameters(true), false);
+                byte[] decryptedKey = RSADecrypt(UTF8Encoding.UTF8.GetBytes(encryptedKey), RSA.ExportParameters(true), false);
 
+                FiokVaultDES des = new FiokVaultDES(decryptedKey);
+
+                message = Encoding.ASCII.GetBytes(des.Decrypt(messages[2]));
                 //Display the decrypted plaintext to the console. 
                 //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
 
-                return decryptedData;
+                return message;
             }
         }
 
