@@ -35,7 +35,7 @@ namespace FiokVaultServer
             this.txtServerOutput = new System.Windows.Forms.TextBox();
             this.btnStopServer = new System.Windows.Forms.Button();
             this.btnStartServer = new System.Windows.Forms.Button();
-            this.btnCopy = new System.Windows.Forms.Button();
+            this.btnClear = new System.Windows.Forms.Button();
             this.pnlClient = new System.Windows.Forms.Panel();
             this.lblClient = new System.Windows.Forms.Label();
             this.lbClientIP = new System.Windows.Forms.ListBox();
@@ -51,7 +51,7 @@ namespace FiokVaultServer
             this.pnlServer.Controls.Add(this.txtServerOutput);
             this.pnlServer.Controls.Add(this.btnStopServer);
             this.pnlServer.Controls.Add(this.btnStartServer);
-            this.pnlServer.Controls.Add(this.btnCopy);
+            this.pnlServer.Controls.Add(this.btnClear);
             this.pnlServer.Location = new System.Drawing.Point(12, 12);
             this.pnlServer.Name = "pnlServer";
             this.pnlServer.Size = new System.Drawing.Size(342, 346);
@@ -106,15 +106,15 @@ namespace FiokVaultServer
             this.btnStartServer.UseVisualStyleBackColor = true;
             this.btnStartServer.Click += new System.EventHandler(this.btnStartServer_Click);
             // 
-            // btnCopy
+            // btnClear
             // 
-            this.btnCopy.Location = new System.Drawing.Point(3, 320);
-            this.btnCopy.Name = "btnCopy";
-            this.btnCopy.Size = new System.Drawing.Size(85, 23);
-            this.btnCopy.TabIndex = 5;
-            this.btnCopy.Text = "Copy";
-            this.btnCopy.UseVisualStyleBackColor = true;
-            this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
+            this.btnClear.Location = new System.Drawing.Point(3, 320);
+            this.btnClear.Name = "btnClear";
+            this.btnClear.Size = new System.Drawing.Size(85, 23);
+            this.btnClear.TabIndex = 5;
+            this.btnClear.Text = "Clear";
+            this.btnClear.UseVisualStyleBackColor = true;
+            this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // pnlClient
             // 
@@ -161,7 +161,10 @@ namespace FiokVaultServer
             this.ClientSize = new System.Drawing.Size(622, 370);
             this.Controls.Add(this.pnlServer);
             this.Controls.Add(this.pnlClient);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Main";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Main";
             this.pnlServer.ResumeLayout(false);
             this.pnlServer.PerformLayout();
@@ -183,6 +186,6 @@ namespace FiokVaultServer
         private System.Windows.Forms.ListBox lbClientIP;
         private System.Windows.Forms.Button btnStopServer;
         private System.Windows.Forms.MaskedTextBox mtbAddress;
-        private System.Windows.Forms.Button btnCopy;
+        private System.Windows.Forms.Button btnClear;
     }
 }

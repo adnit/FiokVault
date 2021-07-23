@@ -137,25 +137,32 @@ namespace FiokVaultServer
         }
         public static string GetData(string username)
         {
-            XElement root = XElement.Load(XMLUrl);
-            IEnumerable<XElement> Users = root.Elements("User");
+            try
+            {
+                XElement root = XElement.Load(XMLUrl);
+                IEnumerable<XElement> Users = root.Elements("User");
 
-            IEnumerable<XElement> currentUser =
-              from el in Users
-              where (string)el.Attribute("username") == username
-              select el;
-            if (currentUser.Elements("Shpenzimet").Count() == 0)
+                IEnumerable<XElement> currentUser =
+                  from el in Users
+                  where (string)el.Attribute("username") == username
+                  select el;
+                if (currentUser.Elements("Shpenzimet").Count() == 0)
+                {
+                    return "OK";
+                }
+                else
+                {
+                    string result = "";
+                    foreach (XElement xUser in currentUser.Elements("Shpenzimet"))
+                    {
+                        result += xUser.ToString();
+                    }
+                    return result;
+                }
+            }
+            catch(Exception e)
             {
                 return "ERROR";
-            }
-            else
-            {
-                string result = "";
-                foreach (XElement xUser in currentUser.Elements("Shpenzimet"))
-                {
-                    result += xUser.ToString();
-                }
-                return result;
             }
         }
 

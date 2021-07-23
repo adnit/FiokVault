@@ -74,21 +74,6 @@ namespace FiokVaultServer
             }
         }
 
-        private void btnCopy_Click(object sender, EventArgs e)
-        {
-            if (connection == null)
-                return;
-            try
-            {
-                var port = Int32.Parse(ipAddress.Split(':')[1]);
-                TcpClient client = new TcpClient(ipAddress.Split(':')[0], port);
-            }
-            catch (ArgumentNullException err)
-            {
-                Console.WriteLine("ArgumentNullException: {0}", err);
-            }
-        }
-
         private void btnClientDisconnect_Click(object sender, EventArgs e)
         {
             int index = lbClientIP.SelectedIndex;
@@ -99,6 +84,11 @@ namespace FiokVaultServer
                 connection.RemoveClient(index);
                
             }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            txtServerOutput.Text = "";
         }
     }
 }

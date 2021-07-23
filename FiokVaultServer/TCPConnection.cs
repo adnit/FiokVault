@@ -72,7 +72,7 @@ namespace FiokVaultServer
                 // Loop to receive all the data sent by the client.
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
-                    // Translate data bytes to a ASCII string.
+                    //Qita e merr prej klientit
                     data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                     PrintLine("Received: " + data);
 
@@ -100,25 +100,25 @@ namespace FiokVaultServer
                             break;
                     }
 
+                    //Pergjigja, ma saktesisht returnMessage; qita e dergon te klienti
                     byte[] response = System.Text.Encoding.ASCII.GetBytes(returnMessage);
-
-                    // Send back a response.
+                    //ma saktesisht qitu e dergon
                     stream.Write(response, 0, response.Length);
-                    PrintLine("Sent: " + returnMessage);
+
+                    if (returnMessage == "ERROR" || returnMessage == "OK")
+                        PrintLine("Sent: " + returnMessage);
+                    else
+                        PrintLine("Sent: " + "XML INFO");
+
+                    client.Close();
+
                 }
-                client.Close();
+
             }
             catch(Exception en)
             {
-                PrintLine("Client forcefully disconnected!");
-                PrintLine(en.Message);  
-            }
-            finally
-            {
                 RemoveClient(0);
-                client.Close();
             }
-
         }
         public void RemoveClient(int index)
         {
