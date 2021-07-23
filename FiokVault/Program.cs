@@ -24,6 +24,6 @@ namespace FiokVault
     }
     static class SessionStorage
     {
-        public static string username = "adnit";
+        public static string username = String.Empty;
     }
 }

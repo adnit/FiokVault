@@ -24,7 +24,7 @@ namespace FiokVault
 
                 stream.Write(data, 0, data.Length);
 
-                data = new Byte[256];
+                data = new Byte[1048];
 
                 String responseData = String.Empty;
 
@@ -32,8 +32,9 @@ namespace FiokVault
                 responseData = Encoding.ASCII.GetString(data, 0, bytes);
 
                 return responseData;
-                stream.Close();
+                client.GetStream().Close();
                 client.Close();
+                client = null;
             }
             catch (ArgumentNullException e)
             {

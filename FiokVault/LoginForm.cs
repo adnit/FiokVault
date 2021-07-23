@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
 
-namespace FiokVault 
+namespace FiokVault
 {
-    
+
     public partial class LoginForm : Form
     {
         public LoginForm()
@@ -20,12 +20,12 @@ namespace FiokVault
             StartPosition = FormStartPosition.CenterScreen;
             AcceptButton = loginBtn;
             progressBar1.Visible = false;
-            if(!String.IsNullOrEmpty(SessionStorage.username))
+            if (!String.IsNullOrEmpty(SessionStorage.username))
             {
                 usernameTxt.Text = SessionStorage.username;
                 ActiveControl = passwordTxt;
             }
-            
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -40,17 +40,18 @@ namespace FiokVault
             signupForm.ShowDialog();
             signupForm.Dispose();
             Show();
+            if (!String.IsNullOrEmpty(SessionStorage.username))
+            {
+                usernameTxt.Text = SessionStorage.username;
+                ActiveControl = passwordTxt;
+            }
         }
 
         private void usernameTxt_TextChanged(object sender, EventArgs e)
         {
-        
-            removeSpaces();
-            
         }
         private void usernameTxt_KeyDown(object sender, KeyEventArgs e)
         {
-            
 
         }
 
@@ -62,7 +63,7 @@ namespace FiokVault
         private void loginBtn_Click(object sender, EventArgs e)
         {
 
-            if(passwordTxt.TextLength < 6 || usernameTxt.TextLength < 4)
+            if (passwordTxt.TextLength < 6 || usernameTxt.TextLength < 4)
             {
                 var result = MessageBox.Show("Emri i perdoruesit ose fjalekalimi jane gabim", "Gabim", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
                 if (result == DialogResult.Cancel)
@@ -72,26 +73,30 @@ namespace FiokVault
             }
             else
             {
-                string command = 
-                    "LOGIN" 
-                    + "?username=" + usernameTxt.Text 
-                    + "&password=" + passwordTxt.Text;
+                string command =
+                  "LOGIN" +
+                  "?username=" + usernameTxt.Text +
+                  "&password=" + passwordTxt.Text;
                 progressBar1.Visible = true;
                 progressBar1.Value = 45;
                 try
                 {
                     string response = TCPClient.sendMessage(command);
-                    MessageBox.Show(response);
-                    if(response == "OK")
+                    if (response == "OK")
                     {
                         SessionStorage.username = usernameTxt.Text;
-                        // switch te main window
+                        Hide();
+                        FiokVault fvault = new();
+                        fvault.ShowDialog();
+                        fvault.Dispose();
+                        Close();
                     }
-                    else if(response == "ERROR")
-                    { 
+                    else if (response == "ERROR")
+                    {
                         throw new Exception("Emri i perdoruesit ose fjalekalimi jane gabim");
-                    }else
-                    { 
+                    }
+                    else
+                    {
                         throw new Exception("Ka ndodhur nje gabim kontaktoni adminin");
                     }
                 }

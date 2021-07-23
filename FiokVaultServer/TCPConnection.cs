@@ -81,8 +81,7 @@ namespace FiokVaultServer
                     switch (Server.ReadRequestType(data))
                     {
                         case "INSERT":
-                            user = Server.ReadInsertInfo(data);
-                            returnMessage = XML.InsertData(user, user.shpenzimet[0]);
+                            returnMessage = XML.InsertData(data);
                             break;
                         case "LOGIN":
                             user = Server.ReadLoginInfo(data);
@@ -93,8 +92,8 @@ namespace FiokVaultServer
                             returnMessage = XML.RegisterUser(user);
                             break;
                         case "GETDATA":
-                            user.username = Server.ReadRequestValue(data, "username");
-                            returnMessage = XML.GetData(user);
+                            string username = Server.GetData(data);
+                            returnMessage = XML.GetData(username);
                             break;
                         default:
                             returnMessage = "ERROR";
@@ -112,6 +111,7 @@ namespace FiokVaultServer
             catch(Exception en)
             {
                 PrintLine("Client forcefully disconnected!");
+                PrintLine(en.Message);  
             }
             finally
             {
