@@ -26,7 +26,7 @@ namespace FiokVault
 
         private void FiokVault_Load(object sender, EventArgs e)
         {
-            reload();
+          reload();
         }
         private void reload()
         {
@@ -35,10 +35,10 @@ namespace FiokVault
             try
             {
                 string response = TCPClient.sendMessage(command);
-
+                Debug.WriteLine(response);
                 if (response.Length > 8)
                 {
-                    StringReader SR = new StringReader(command);
+                    StringReader SR = new StringReader(response);
 
                     DataSet ds = new DataSet();
                     ds.ReadXml(SR);
@@ -103,13 +103,16 @@ namespace FiokVault
                 MessageBox.Show("Ju lutem plotesoni fushat e kerkuara");
             }else
             {
+
                 double qmimi = (double)numericUpDown1.Value + (double)numericUpDown2.Value / 100;
                 string command
-                    = "INSERT?tipi="
-                    + comboBox1.SelectedItem.ToString()
+                    = "INSERT" 
+                    + "?username=" + SessionStorage.username
+                    + "&tipi=" + comboBox1.SelectedItem.ToString()
                     + "&viti=" + vitiDropDown.Value.ToString()
                     + "&muaji=" + comboBox2.SelectedItem.ToString()
                     + "&qmimi=" + qmimi.ToString();
+                Debug.WriteLine(command);
                 try
                 {
                     string response = TCPClient.sendMessage(command);

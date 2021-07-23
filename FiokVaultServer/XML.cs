@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 using System.Security.Cryptography;
+using System.IO;
+using System.Web;
 
 namespace FiokVaultServer
 {
@@ -90,36 +92,42 @@ namespace FiokVaultServer
             }
 
         }
-        public static string InsertData(User user, Shpenzimet shpenzimi)
+        public static string InsertData(string request)
         {
+            var req = request.Substring(request.IndexOf('?') + 1);
+            var parsed = HttpUtility.ParseQueryString(req);
+            string username = parsed["username"];
+            string tipi = parsed["tipi"];
+            string viti = parsed["viti"];
+            string muaji = parsed["muaji"];
+            string cmimi = parsed["qmimi"];
             XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             IEnumerable<XElement> currentUser =
               from el in Users
-              where (string)el.Attribute("username") == user.username
+              where (string)el.Attribute("username") == username
               select el;
             IEnumerable<XElement> Shpenzimet = currentUser.Elements("Shpenzimet");
             if (Shpenzimet.Count() == 0)
             {
                 currentUser.First().Add(new XElement("Shpenzimet",
                   new XElement("Shpenzimi",
-                    new XAttribute("tipi", shpenzimi.tipi),
-                    new XAttribute("viti", shpenzimi.viti),
-                    new XAttribute("muaji", shpenzimi.muaji),
-                    new XAttribute("qmimi", shpenzimi.cmimi)
+                    new XAttribute("tipi", tipi),
+                    new XAttribute("viti", viti),
+                    new XAttribute("muaji",muaji),
+                    new XAttribute("qmimi",cmimi)
                   )));
                 root.Save(XMLUrl);
                 return "OK";
             }
             else
             {
-                Debug.WriteLine(Shpenzimet.First());
                 Shpenzimet.First().AddFirst(new XElement("Shpenzimi",
-                  new XAttribute("tipi", shpenzimi.tipi),
-                  new XAttribute("viti", shpenzimi.viti),
-                  new XAttribute("muaji", shpenzimi.muaji),
-                  new XAttribute("qmimi", shpenzimi.cmimi)));
+                  new XAttribute("tipi", tipi),
+                  new XAttribute("viti", viti),
+                  new XAttribute("muaji", muaji),
+                  new XAttribute("qmimi", cmimi)));
 
                 root.Save(XMLUrl);
                 return "OK";
@@ -127,18 +135,18 @@ namespace FiokVaultServer
             }
 
         }
-        public static string GetData(User user)
+        public static string GetData(string username)
         {
             XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             IEnumerable<XElement> currentUser =
               from el in Users
-              where (string)el.Attribute("username") == user.username
+              where (string)el.Attribute("username") == username
               select el;
             if (currentUser.Elements("Shpenzimet").Count() == 0)
             {
-                return "";
+                return "ERROR";
             }
             else
             {
@@ -147,7 +155,6 @@ namespace FiokVaultServer
                 {
                     result += xUser.ToString();
                 }
-
                 return result;
             }
         }

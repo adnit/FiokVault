@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.Web;
 
 namespace FiokVaultServer
 {
@@ -42,13 +44,24 @@ namespace FiokVaultServer
             return input.Substring(0, input.IndexOf('?'));
         }
 
+        public static string GetData(string input)
+        {
+            var req = input.Substring(input.IndexOf('?') + 1);
+            var parsed = HttpUtility.ParseQueryString(req);
+
+            string username = parsed["username"];
+            return username;
+        }
+
         ////LOGIN?username=johndoe&password=123123123
 
         public static User ReadLoginInfo(string input)
         {
-         
-            string username = ReadRequestValue(input, "username");
-            string password = ReadRequestValue(input, "password");
+            var req = input.Substring(input.IndexOf('?') + 1);
+            var parsed = HttpUtility.ParseQueryString(req);
+
+            string username = parsed["username"];
+            string password = parsed["password"];
 
             User output = new User();
             output.username = username;
@@ -59,10 +72,13 @@ namespace FiokVaultServer
         //SIGNUP?email=asdasd@ada.com&username=asdasdasd&gjinia=M&password=123123
         public static User ReadSignupInfo(string input)
         {
-            string email = ReadRequestValue(input, "email");
-            string username = ReadRequestValue(input, "username");
-            string gjinia = ReadRequestValue(input, "gjinia");
-            string password = ReadRequestValue(input, "password");
+            var req = input.Substring(input.IndexOf('?')+1);
+            var parsed = HttpUtility.ParseQueryString(req);
+
+            string email = parsed["email"];
+            string username = parsed["username"];
+            string gjinia = parsed["gjinia"];
+            string password = parsed["password"];
 
             User output = new User();
             output.username = username;
@@ -77,11 +93,16 @@ namespace FiokVaultServer
         //INSERT?username=johndoe&tipi=Blerje&viti=2015&muaji=Mars&qmimi=2
         public static User ReadInsertInfo(string input)
         {
-            string username = ReadRequestValue(input, "username");
-            string tipi = ReadRequestValue(input, "tipi");
-            string viti = ReadRequestValue(input, "viti");
-            string muaji = ReadRequestValue(input, "muaji");
-            string cmimi = ReadRequestValue(input, "qmimi");
+
+            var req = input.Substring(input.IndexOf('?') + 1);
+            var parsed = HttpUtility.ParseQueryString(req);
+
+            string username = parsed["username"];
+            string tipi = parsed["tipi"];
+            string viti = parsed["viti"];
+            string muaji = parsed["muaji"];
+            string cmimi = parsed["cmimi"];
+
 
             User user = new User();
             user.username = username;

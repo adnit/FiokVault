@@ -40,11 +40,15 @@ namespace FiokVault
             signupForm.ShowDialog();
             signupForm.Dispose();
             Show();
+            if (!String.IsNullOrEmpty(SessionStorage.username))
+            {
+                usernameTxt.Text = SessionStorage.username;
+                ActiveControl = passwordTxt;
+            }
         }
 
         private void usernameTxt_TextChanged(object sender, EventArgs e)
         {
-            removeSpaces();
         }
         private void usernameTxt_KeyDown(object sender, KeyEventArgs e)
         {
