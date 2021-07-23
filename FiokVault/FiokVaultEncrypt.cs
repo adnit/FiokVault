@@ -13,7 +13,7 @@ namespace FiokVault
 {
     class FiokVaultEncrypt
     {
-        static string PublicKeyString = File.ReadAllText("..\\..\\..\\publickey.txt");
+        static string PublicKeyString = File.ReadAllText("..\\..\\..\\certificate\\publickey.txt");
 
         public byte[] encryptMessage(byte[] dataToEncrypt)
         {
