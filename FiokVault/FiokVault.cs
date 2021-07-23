@@ -61,6 +61,8 @@ namespace FiokVault
                 txtId.Text = ReadUserData(userData, "userid");
                 txtEmail.Text = ReadUserData(userData, "email");
                 txtUser.Text = ReadUserData(userData, "username");
+
+                this.Text = "Dashboard - " + txtUser.Text;
                 txtSex.Text = ReadUserData(userData, "gjinia");
                 Debug.WriteLine(rawResponse);
                 int start = rawResponse.IndexOf("<SignatureValue>");

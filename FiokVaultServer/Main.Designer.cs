@@ -29,6 +29,7 @@ namespace FiokVaultServer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.pnlServer = new System.Windows.Forms.Panel();
             this.lblServer = new System.Windows.Forms.Label();
             this.mtbAddress = new System.Windows.Forms.MaskedTextBox();
@@ -162,10 +163,11 @@ namespace FiokVaultServer
             this.Controls.Add(this.pnlServer);
             this.Controls.Add(this.pnlClient);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Main";
+            this.Text = "Server Dashboard";
             this.pnlServer.ResumeLayout(false);
             this.pnlServer.PerformLayout();
             this.pnlClient.ResumeLayout(false);
