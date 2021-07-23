@@ -77,32 +77,24 @@ namespace FiokVaultServer
                     PrintLine("Received: " + data);
 
                     string returnMessage = "";
-                    User user;
+                    User user = new User();
                     switch (Server.ReadRequestType(data))
                     {
                         case "INSERT":
-                            Server.ReadInsertInfo(data);
+                            user = Server.ReadInsertInfo(data);
+                            returnMessage = XML.InsertData(user, user.shpenzimet[0]);
                             break;
                         case "LOGIN":
                             user = Server.ReadLoginInfo(data);
-                            if (Server.VerifyLogin(user))
-                                returnMessage = "OK";
-                            else
-                                returnMessage = "ERROR";
+                            returnMessage = XML.LoginUser(user);
                             break;
                         case "SIGNUP":
                             user = Server.ReadSignupInfo(data);
-                            //
-                            //DO REGISTER
-                            //
-                            returnMessage = "ERROR";
+                            returnMessage = XML.RegisterUser(user);
                             break;
                         case "GETDATA":
-                            Server.GetData(data);
-                            //
-                            //DO GET DATA
-                            //
-                            returnMessage = "ERROR";
+                            user.username = Server.ReadRequestValue(data, "username");
+                            returnMessage = XML.GetData(user);
                             break;
                         default:
                             returnMessage = "ERROR";
@@ -123,7 +115,7 @@ namespace FiokVaultServer
             }
             finally
             {
-                RemoveClient(clients.IndexOf(client));
+                RemoveClient(0);
                 client.Close();
             }
 
@@ -131,8 +123,11 @@ namespace FiokVaultServer
         public void RemoveClient(int index)
         {
             try {
-                clients.RemoveAt(index); 
-                }
+                clients.RemoveAt(index);
+                MethodInvoker action = delegate
+                { lbClient.Items.RemoveAt(index); };
+                lbClient.BeginInvoke(action);
+            }
             catch(Exception e)
             {
                 Console.WriteLine("Error occurred while removing clients!");

@@ -13,22 +13,18 @@ namespace FiokVaultServer
 {
     class XML
     {
-        public
-        const int SALT_SIZE = 16;
-        public
-        const int HASH_SIZE = 16;
-        public
-        const int ITERATIONS = 100000;
+        public static List<User> loggedUsers = new List<User>();
 
-        public void RegisterUser(string email, string username, string gjinia, string password, string url)
+        public static string XMLUrl = "Users.xml";
+        public static string RegisterUser(User user)
         {
-            XElement root = XElement.Load(url);
+            XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             // e kqyr a ka user me kit username
             IEnumerable<XElement> currentUsers =
               from el in Users
-              where (string)el.Attribute("username") == username
+              where (string)el.Attribute("username") == user.username
               select el;
 
             // userid
@@ -36,41 +32,40 @@ namespace FiokVaultServer
 
             // salti
 
-            Hash newUser = new(password);
+            Hash newUser = new(user.password);
 
             if (currentUsers.Count() == 0)
             {
                 root.Add(new XElement("User",
                   new XAttribute("userid", userID),
-                  new XAttribute("email", email),
-                  new XAttribute("username", username),
-                  new XAttribute("gjinia", gjinia),
+                  new XAttribute("email", user.email),
+                  new XAttribute("username", user.username),
+                  new XAttribute("gjinia", user.gjinia),
                   new XAttribute("salt", newUser.salt),
                   new XAttribute("hashedpw", newUser.hashedpw)
                 ));
-                root.Save(url);
+                root.Save(XMLUrl);
                 newUser = null;
-                Debug.WriteLine("OK");
+                return "OK";
             }
-            else
-            {
-                Debug.WriteLine("ERROR");
-            }
+
+            return "ERROR";
+
         }
-        public void LoginUser(string username, string password, string url)
+        public static string LoginUser(User user)
         {
-            XElement root = XElement.Load(url);
+            XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             // e kqyr a ka user me kit username
             IEnumerable<XElement> currentUsers =
               from el in Users
-              where (string)el.Attribute("username") == username
+              where (string)el.Attribute("username") == user.username
               select el;
 
             if (currentUsers.Count() == 0)
             {
-                Debug.WriteLine("ERROR");
+                return "ERROR";
             }
             else
             {
@@ -79,81 +74,81 @@ namespace FiokVaultServer
 
                 Hash user1 = new(userSalt, hashedPw);
 
-                if (user1.CheckUser(password))
+                if (user1.CheckUser(user.password))
                 {
                     user1 = null;
-                    Debug.WriteLine("OK");
+                    return "OK";
+                    if (loggedUsers.IndexOf(user) < 0)
+                        loggedUsers.Add(user);
                 }
                 else
                 {
                     user1 = null;
-                    Debug.WriteLine("ERROR");
+                    return "ERROR";
                 }
 
             }
 
         }
-        private void InsertData(string username, string tipi, string viti, string muaji, string qmimi, string url)
+        public static string InsertData(User user, Shpenzimet shpenzimi)
         {
-            XElement root = XElement.Load(url);
+            XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             IEnumerable<XElement> currentUser =
               from el in Users
-              where (string)el.Attribute("username") == username
+              where (string)el.Attribute("username") == user.username
               select el;
             IEnumerable<XElement> Shpenzimet = currentUser.Elements("Shpenzimet");
             if (Shpenzimet.Count() == 0)
             {
                 currentUser.First().Add(new XElement("Shpenzimet",
                   new XElement("Shpenzimi",
-                    new XAttribute("tipi", tipi),
-                    new XAttribute("viti", viti),
-                    new XAttribute("muaji", muaji),
-                    new XAttribute("qmimi", qmimi)
+                    new XAttribute("tipi", shpenzimi.tipi),
+                    new XAttribute("viti", shpenzimi.viti),
+                    new XAttribute("muaji", shpenzimi.muaji),
+                    new XAttribute("qmimi", shpenzimi.cmimi)
                   )));
-                root.Save(url);
-                Debug.WriteLine("OK");
+                root.Save(XMLUrl);
+                return "OK";
             }
             else
             {
                 Debug.WriteLine(Shpenzimet.First());
                 Shpenzimet.First().AddFirst(new XElement("Shpenzimi",
-                  new XAttribute("tipi", tipi),
-                  new XAttribute("viti", viti),
-                  new XAttribute("muaji", muaji),
-                  new XAttribute("qmimi", qmimi)));
+                  new XAttribute("tipi", shpenzimi.tipi),
+                  new XAttribute("viti", shpenzimi.viti),
+                  new XAttribute("muaji", shpenzimi.muaji),
+                  new XAttribute("qmimi", shpenzimi.cmimi)));
 
-                root.Save(url);
-                Debug.WriteLine("OK");
+                root.Save(XMLUrl);
+                return "OK";
 
             }
 
         }
-
-        private void GetData(string url, string username)
+        public static string GetData(User user)
         {
-            XElement root = XElement.Load(url);
+            XElement root = XElement.Load(XMLUrl);
             IEnumerable<XElement> Users = root.Elements("User");
 
             IEnumerable<XElement> currentUser =
               from el in Users
-              where (string)el.Attribute("username") == username
+              where (string)el.Attribute("username") == user.username
               select el;
             if (currentUser.Elements("Shpenzimet").Count() == 0)
             {
-                Debug.WriteLine("me i kallxu qe ska");
+                return "";
             }
             else
             {
                 string result = "";
-                foreach (XElement user in currentUser.Elements("Shpenzimet"))
+                foreach (XElement xUser in currentUser.Elements("Shpenzimet"))
                 {
-                    result += user.ToString();
+                    result += xUser.ToString();
                 }
 
-                // qetu me qu
-                Debug.WriteLine(result);
+                return result;
             }
         }
 
