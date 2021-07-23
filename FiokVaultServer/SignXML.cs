@@ -12,7 +12,7 @@ namespace FiokVaultServer
 {
     class SignXML
     {
-        public SignXML(XmlDocument xmlDoc)
+        public XmlDocument SignFile(XmlDocument xmlDoc)
         {
             try
             {
@@ -37,19 +37,22 @@ namespace FiokVaultServer
 
                 Console.WriteLine("XML file signed.");
 
-                // Save the document.
-                xmlDoc.Save("test.xml");
+                //// Save the document.
+                //xmlDoc.Save("test.xml");
+
+                return xmlDoc;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return null;
             }
         }
 
         // Sign an XML file.
         // This document cannot be verified unless the verifying
         // code has the key with which it was signed.
-        public static void SignXMLDocument(XmlDocument xmlDoc, RSA rsaKey)
+        static void SignXMLDocument(XmlDocument xmlDoc, RSA rsaKey)
         {
             // Check arguments.
             if (xmlDoc == null)

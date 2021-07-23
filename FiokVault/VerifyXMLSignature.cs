@@ -9,7 +9,7 @@ namespace FiokVault
     class VerifyXMLSignature
     {
 
-        public VerifyXMLSignature(XmlDocument xmlDoc)
+        public bool verifyFileSignature(XmlDocument xmlDoc)
         {
             try
             {
@@ -35,10 +35,12 @@ namespace FiokVault
                 {
                     Console.WriteLine("The XML signature is not valid.");
                 }
+                return result;
             }
             catch (Exception e)
             {
                 Console.WriteLine(e.Message);
+                return false;
             }
         }
 
