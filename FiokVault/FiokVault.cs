@@ -8,8 +8,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Xml;
+using System.IO;
+using System.Xml.Linq;
+using System.Linq;
 
-namespace FiokVault 
+namespace FiokVault
 {
     public partial class FiokVault : Form
     {
@@ -22,15 +26,43 @@ namespace FiokVault
 
         private void FiokVault_Load(object sender, EventArgs e)
         {
-
+            reload();
         }
+        private void reload()
+        {
+            string command = "GETDATA?username=" + SessionStorage.username;
+
+            try
+            {
+                string response = TCPClient.sendMessage(command);
+
+                if (response.Length > 8)
+                {
+                    StringReader SR = new StringReader(command);
+
+                    DataSet ds = new DataSet();
+                    ds.ReadXml(SR);
+                    dataGridView1.DataSource = ds.Tables[0];
+                    label7.Visible = false;
+                }
+                else
+                {
+                    label7.Visible = true;
+                }
+            }
+            catch(Exception ex)
+            {
+                label7.Text = ex.Message;
+                label7.Visible = true;
+            }
+        } 
         private void label2_Click(object sender, EventArgs e)
         {
         }
 
         private void reloadBtn_Click(object sender, EventArgs e)
         {
-            string command = "GETDATA?username=" + SessionStorage.username;
+            reload();
         }
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -64,12 +96,11 @@ namespace FiokVault
         {
 
         }
-
         private void addNew_Click(object sender, EventArgs e)
         {
             if(comboBox1.SelectedIndex == -1 || comboBox2.SelectedIndex  == -1)
             {
-                MessageBox.Show("make sure u select ");
+                MessageBox.Show("Ju lutem plotesoni fushat e kerkuara");
             }else
             {
                 double qmimi = (double)numericUpDown1.Value + (double)numericUpDown2.Value / 100;
@@ -85,7 +116,7 @@ namespace FiokVault
                     
                     if (response == "OK")
                     {
-                        // switch te main window
+                        reload();
                     }
                     else if (response == "ERROR")
                     {

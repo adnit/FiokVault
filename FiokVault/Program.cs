@@ -19,11 +19,11 @@ namespace FiokVault
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new LoginForm());
+            Application.Run(new FiokVault());
         }
     }
     static class SessionStorage
     {
-        public static string username = "adnit";
+        public static string username = String.Empty;
     }
 }
