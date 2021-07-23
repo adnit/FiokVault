@@ -8,32 +8,39 @@ using System.Threading.Tasks;
 
 namespace FiokVaultServer
 {
-    class FiokVaultDecrypt
+    class FiokVaultServerDecrypt
     {
+        static int IVLength = 8;
+        static int RSAKeyLength = 256;
         static string PrivateKeyString = File.ReadAllText("..\\..\\..\\certificate\\privkey.pem");
-
+        public byte[] decryptedKey;
         public byte[] decryptMessage(byte[] encryptedData)
         {
-            string decodedString = Encoding.UTF8.GetString(encryptedData);
-            String[] messages = decodedString.Split(",");
+            //String[] messages = decodedString.Split(",");
+
+            byte[] IVp = new byte[IVLength];
+            byte[] encryptedKey = new byte[RSAKeyLength];
+            byte[] encryptedMessage = new byte[encryptedData.Length - IVLength - RSAKeyLength];
+            SplitArray(IVp, encryptedMessage, IVLength, encryptedData);
+            SplitArray(encryptedKey, encryptedMessage, RSAKeyLength, encryptedMessage);
 
             using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
             {
                 byte[] message;
-                String encryptedKey = messages[1];
 
                 RSA.ImportFromPem(PrivateKeyString);
                 //Pass the data to DECRYPT, the private key information 
                 //(using RSACryptoServiceProvider.ExportParameters(true),
                 //and a boolean flag specifying no OAEP padding.
-                byte[] decryptedKey = RSADecrypt(UTF8Encoding.UTF8.GetBytes(encryptedKey), RSA.ExportParameters(true), false);
+                byte[] decryptedKey = RSADecrypt(encryptedKey, RSA.ExportParameters(true), false);
+                this.decryptedKey = decryptedKey;
 
                 FiokVaultDES des = new FiokVaultDES(decryptedKey);
 
-                message = Encoding.ASCII.GetBytes(des.Decrypt(messages[2]));
+                message = Encoding.ASCII.GetBytes(des.Decrypt(Encoding.ASCII.GetString(encryptedMessage)));
                 //Display the decrypted plaintext to the console. 
                 //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
-
+                Console.WriteLine(message);
                 return message;
             }
         }
@@ -67,6 +74,12 @@ namespace FiokVaultServer
 
                 return null;
             }
+        }
+
+        static void SplitArray(byte[] firstHalf, byte[] secondHalf, int offset, byte[] sourceArray)
+        {
+            Array.Copy(sourceArray, firstHalf, offset);
+            Array.Copy(sourceArray, offset, secondHalf, 0, secondHalf.Length);
         }
     }
 }

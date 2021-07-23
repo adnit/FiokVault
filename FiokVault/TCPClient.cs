@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.Security.Cryptography;
 
 namespace FiokVault
 {
@@ -21,10 +22,14 @@ namespace FiokVault
                 //message -> INPUT; qikjo i shkon serverit
                 Byte[] data = Encoding.ASCII.GetBytes(message);
 
+                byte[] Key = generateSafeRandom(8);
+                FiokVaultClientEncrypt fvce = new FiokVaultClientEncrypt(Key);
+                byte[] encryptedMessage = fvce.encryptMessage(data);
+
                 NetworkStream stream = client.GetStream();
 
                 //SEND DATA TO TCP SERVER; e qon datan
-                stream.Write(data, 0, data.Length);
+                stream.Write(encryptedMessage, 0, encryptedMessage.Length);
 
                 data = new Byte[1048];
 
@@ -36,11 +41,12 @@ namespace FiokVault
 
                 //responseData -> OUTPUT; qita e merr prej serverit
                 responseData = Encoding.ASCII.GetString(data, 0, bytes);
-
+                FiokVaultClientDecrypt fvcd = new FiokVaultClientDecrypt(Key);
+                byte[] decryptedResponse = fvcd.decryptMessage(Encoding.ASCII.GetBytes(responseData));
 
                 client.GetStream().Close();
                 client.Close();
-                return responseData;       
+                return Encoding.ASCII.GetString(decryptedResponse);
             }
             catch (ArgumentNullException e)
             {
@@ -50,6 +56,14 @@ namespace FiokVault
             {
                 throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
             }
+        }
+
+        static byte[] generateSafeRandom(int length)
+        {
+            byte[] safeRandom = new byte[length];
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            provider.GetBytes(safeRandom);
+            return safeRandom;
         }
     }
 }

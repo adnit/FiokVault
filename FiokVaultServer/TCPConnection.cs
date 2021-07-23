@@ -18,13 +18,13 @@ namespace FiokVaultServer
         TcpListener server;
         Thread listeningThread;
         List<TcpClient> clients = new List<TcpClient>();
-        public TCPConnection(String localAddress,TextBox output, ListBox clientList)
+        public TCPConnection(String localAddress, TextBox output, ListBox clientList)
         {
             address = IPAddress.Parse(localAddress.Split(':')[0]);
             port = Int32.Parse(localAddress.Split(':')[1]);
             txtOutput = output;
             lbClient = clientList;
-        } 
+        }
         public void StartServer()
         {
             PrintLine("Starting server!");
@@ -53,7 +53,7 @@ namespace FiokVaultServer
             clients.Clear();
             lbClient.Items.Clear();
             server.Stop();
-        } 
+        }
         private void ClientConnection(object obj)
         {
             TcpClient client = (TcpClient)obj;
@@ -74,6 +74,11 @@ namespace FiokVaultServer
                 {
                     //Qita e merr prej klientit
                     data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
+                    Debug.WriteLine(data);
+                    FiokVaultServerDecrypt fvsd = new FiokVaultServerDecrypt();
+                    data = System.Text.Encoding.UTF8.GetString(fvsd.decryptMessage(System.Text.Encoding.ASCII.GetBytes(data)));
+                    byte[] sentKey = fvsd.decryptedKey;
+
                     PrintLine("Received: " + data);
 
                     string returnMessage = "";
@@ -102,6 +107,8 @@ namespace FiokVaultServer
 
                     //Pergjigja, ma saktesisht returnMessage; qita e dergon te klienti
                     byte[] response = System.Text.Encoding.ASCII.GetBytes(returnMessage);
+                    FiokVaultServerEncrypt fvse = new FiokVaultServerEncrypt(sentKey);
+                    response = fvse.encryptMessage(response);
                     //ma saktesisht qitu e dergon
                     stream.Write(response, 0, response.Length);
 
@@ -115,20 +122,21 @@ namespace FiokVaultServer
                 }
 
             }
-            catch(Exception en)
+            catch (Exception en)
             {
                 RemoveClient(0);
             }
         }
         public void RemoveClient(int index)
         {
-            try {
+            try
+            {
                 clients.RemoveAt(index);
                 MethodInvoker action = delegate
                 { lbClient.Items.RemoveAt(index); };
                 lbClient.BeginInvoke(action);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine("Error occurred while removing clients!");
             }
