@@ -30,7 +30,7 @@ namespace FiokVaultServer
               select el;
 
             // userid
-            string userID = Users.Count() + 1.ToString();
+            string userID = (Users.Count() + 1).ToString();
 
             // salti
 
@@ -146,19 +146,16 @@ namespace FiokVaultServer
                   from el in Users
                   where (string)el.Attribute("username") == username
                   select el;
-                if (currentUser.Elements("Shpenzimet").Count() == 0)
-                {
-                    return "OK";
-                }
-                else
-                {
+
                     string result = "";
-                    foreach (XElement xUser in currentUser.Elements("Shpenzimet"))
+                    foreach (XElement xUser in currentUser)
                     {
                         result += xUser.ToString();
                     }
+                    Debug.WriteLine("\n\n\n" + result + "\n\n\n");
+
                     return result;
-                }
+                
             }
             catch(Exception e)
             {

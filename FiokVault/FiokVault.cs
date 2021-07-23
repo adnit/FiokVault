@@ -22,11 +22,19 @@ namespace FiokVault
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
             comboBox1.SelectedIndex = -1;
+
         }
 
         private void FiokVault_Load(object sender, EventArgs e)
         {
           reload();
+        }
+
+        private static string ReadUserData(string input, string value)
+        {
+            int startIndex = input.IndexOf(value) + value.Length + 2;
+            string output = input.Substring(startIndex, input.IndexOf('"', startIndex) - startIndex);
+            return output;
         }
         private void reload()
         {
@@ -34,7 +42,33 @@ namespace FiokVault
 
             try
             {
-                string response = TCPClient.sendMessage(command);
+                string rawResponse = TCPClient.sendMessage(command);
+                int startIndex = rawResponse.IndexOf("<Shpenzimet>");
+                string response = "";
+                string userData = "";
+                if (startIndex > 0)
+                {
+                    int endIndex = rawResponse.IndexOf("</Shpenzimet>") + 13;
+                    response = rawResponse.Substring(rawResponse.IndexOf("<Shpenzimet>"), endIndex - startIndex);
+                    userData = rawResponse.Substring(0, startIndex);
+                }
+                else
+                {
+                    response = "";
+                    userData = rawResponse;
+                }
+
+                txtId.Text = ReadUserData(userData, "userid");
+                txtEmail.Text = ReadUserData(userData, "email");
+                txtUser.Text = ReadUserData(userData, "username");
+                txtSex.Text = ReadUserData(userData, "gjinia");
+
+
+                if (true)
+                    pbVerify.BackgroundImage = Properties.Resources.OK;
+                else
+                    pbVerify.BackgroundImage = Properties.Resources.ERROR;
+
                 if (response.Length > 8)
                 {
                     StringReader SR = new StringReader(response);
@@ -102,6 +136,11 @@ namespace FiokVault
                     }
                 }
             }
+        }
+
+        private void btnLogOut_Click(object sender, EventArgs e)
+        {
+            Close();
         }
     }
 }
