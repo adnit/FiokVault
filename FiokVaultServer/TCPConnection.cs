@@ -63,7 +63,7 @@ namespace FiokVaultServer
             try
             {
                 string data = null;
-                Byte[] bytes = new Byte[256];
+                Byte[] bytes = new Byte[2048];
                 // Get a stream object for reading and writing
                 NetworkStream stream = client.GetStream();
 
