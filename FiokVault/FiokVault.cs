@@ -35,7 +35,6 @@ namespace FiokVault
             try
             {
                 string response = TCPClient.sendMessage(command);
-                Debug.WriteLine(response);
                 if (response.Length > 8)
                 {
                     StringReader SR = new StringReader(response);
@@ -56,45 +55,9 @@ namespace FiokVault
                 label7.Visible = true;
             }
         } 
-        private void label2_Click(object sender, EventArgs e)
-        {
-        }
-
         private void reloadBtn_Click(object sender, EventArgs e)
         {
             reload();
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-
-
-        private void qmimiTxt_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-        private void qmimiTxt_Leave(object sender, System.EventArgs e)
-        {
-
-        }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
         }
         private void addNew_Click(object sender, EventArgs e)
         {

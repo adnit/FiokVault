@@ -18,23 +18,29 @@ namespace FiokVault
             {
                 TcpClient client = new TcpClient(hostname, port);
 
+                //message -> INPUT; qikjo i shkon serverit
                 Byte[] data = Encoding.ASCII.GetBytes(message);
 
                 NetworkStream stream = client.GetStream();
 
+                //SEND DATA TO TCP SERVER; e qon datan
                 stream.Write(data, 0, data.Length);
 
                 data = new Byte[1048];
 
                 String responseData = String.Empty;
 
+
+                //GET RESPONSE
                 Int32 bytes = stream.Read(data, 0, data.Length);
+
+                //responseData -> OUTPUT; qita e merr prej serverit
                 responseData = Encoding.ASCII.GetString(data, 0, bytes);
 
-                return responseData;
+
                 client.GetStream().Close();
                 client.Close();
-                client = null;
+                return responseData;       
             }
             catch (ArgumentNullException e)
             {
@@ -44,7 +50,6 @@ namespace FiokVault
             {
                 throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
             }
-            return "ERROR";
         }
     }
 }

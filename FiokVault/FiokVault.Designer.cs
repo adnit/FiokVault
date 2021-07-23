@@ -55,31 +55,31 @@ namespace FiokVault
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Century Gothic", 23F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.Location = new System.Drawing.Point(27, 24);
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 23F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(24, 18);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(193, 45);
+            this.label1.Size = new System.Drawing.Size(154, 35);
             this.label1.TabIndex = 8;
             this.label1.Text = "FiokVault";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Century Gothic", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(33, 69);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Location = new System.Drawing.Point(29, 52);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(437, 23);
+            this.label2.Size = new System.Drawing.Size(310, 20);
             this.label2.TabIndex = 9;
             this.label2.Text = "The most secure data manager application";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // reloadBtn
             // 
             this.reloadBtn.BackgroundImage = global::FiokVault.Properties.Resources.reloadIcon1;
             this.reloadBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.reloadBtn.Location = new System.Drawing.Point(627, 32);
+            this.reloadBtn.Location = new System.Drawing.Point(549, 24);
+            this.reloadBtn.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.reloadBtn.Name = "reloadBtn";
-            this.reloadBtn.Size = new System.Drawing.Size(45, 45);
+            this.reloadBtn.Size = new System.Drawing.Size(39, 34);
             this.reloadBtn.TabIndex = 10;
             this.reloadBtn.UseVisualStyleBackColor = true;
             this.reloadBtn.Click += new System.EventHandler(this.reloadBtn_Click);
@@ -87,10 +87,11 @@ namespace FiokVault
             // addNew
             // 
             this.addNew.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.addNew.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.addNew.Location = new System.Drawing.Point(557, 397);
+            this.addNew.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.addNew.Location = new System.Drawing.Point(487, 298);
+            this.addNew.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.addNew.Name = "addNew";
-            this.addNew.Size = new System.Drawing.Size(156, 45);
+            this.addNew.Size = new System.Drawing.Size(136, 34);
             this.addNew.TabIndex = 11;
             this.addNew.Text = "Shto faturen";
             this.addNew.UseVisualStyleBackColor = true;
@@ -100,9 +101,10 @@ namespace FiokVault
             // 
             this.button1.BackgroundImage = global::FiokVault.Properties.Resources.logOut;
             this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.button1.Location = new System.Drawing.Point(678, 32);
+            this.button1.Location = new System.Drawing.Point(593, 24);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(45, 45);
+            this.button1.Size = new System.Drawing.Size(39, 34);
             this.button1.TabIndex = 12;
             this.button1.UseVisualStyleBackColor = true;
             // 
@@ -118,7 +120,8 @@ namespace FiokVault
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
             this.dataGridView1.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.dataGridView1.Location = new System.Drawing.Point(33, 112);
+            this.dataGridView1.Location = new System.Drawing.Point(29, 84);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersWidth = 51;
@@ -128,15 +131,15 @@ namespace FiokVault
             this.dataGridView1.ShowCellToolTips = false;
             this.dataGridView1.ShowEditingIcon = false;
             this.dataGridView1.ShowRowErrors = false;
-            this.dataGridView1.Size = new System.Drawing.Size(690, 267);
+            this.dataGridView1.Size = new System.Drawing.Size(604, 200);
             this.dataGridView1.TabIndex = 13;
             // 
             // label3
             // 
-            this.label3.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(40, 390);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(35, 292);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(121, 22);
+            this.label3.Size = new System.Drawing.Size(106, 16);
             this.label3.TabIndex = 14;
             this.label3.Text = "Lloji i fatures";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -150,26 +153,28 @@ namespace FiokVault
             "Pagese",
             "Qiraja",
             "Sherbimet komunale"});
-            this.comboBox1.Location = new System.Drawing.Point(40, 413);
+            this.comboBox1.Location = new System.Drawing.Point(35, 310);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(162, 28);
+            this.comboBox1.Size = new System.Drawing.Size(142, 23);
             this.comboBox1.TabIndex = 16;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+
             // 
             // label4
             // 
-            this.label4.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(215, 390);
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label4.Location = new System.Drawing.Point(188, 292);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(81, 22);
+            this.label4.Size = new System.Drawing.Size(71, 16);
             this.label4.TabIndex = 17;
             this.label4.Text = "Viti";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label4.Click += new System.EventHandler(this.label4_Click);
+
             // 
             // vitiDropDown
             // 
-            this.vitiDropDown.Location = new System.Drawing.Point(215, 414);
+            this.vitiDropDown.Location = new System.Drawing.Point(188, 310);
+            this.vitiDropDown.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.vitiDropDown.Maximum = new decimal(new int[] {
             2030,
             0,
@@ -181,7 +186,7 @@ namespace FiokVault
             0,
             0});
             this.vitiDropDown.Name = "vitiDropDown";
-            this.vitiDropDown.Size = new System.Drawing.Size(91, 27);
+            this.vitiDropDown.Size = new System.Drawing.Size(80, 23);
             this.vitiDropDown.TabIndex = 18;
             this.vitiDropDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.vitiDropDown.Value = new decimal(new int[] {
@@ -207,28 +212,29 @@ namespace FiokVault
             "Tetor",
             "Nentor",
             "Dhjetor"});
-            this.comboBox2.Location = new System.Drawing.Point(317, 414);
+            this.comboBox2.Location = new System.Drawing.Point(277, 310);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(94, 28);
+            this.comboBox2.Size = new System.Drawing.Size(83, 23);
             this.comboBox2.TabIndex = 20;
             // 
             // label5
             // 
-            this.label5.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label5.Location = new System.Drawing.Point(317, 389);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label5.Location = new System.Drawing.Point(277, 292);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(94, 22);
+            this.label5.Size = new System.Drawing.Size(82, 16);
             this.label5.TabIndex = 19;
             this.label5.Text = "Muaji";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.label5.Click += new System.EventHandler(this.label5_Click);
+
             // 
             // qmimiLbl
             // 
-            this.qmimiLbl.Font = new System.Drawing.Font("Century Gothic", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.qmimiLbl.Location = new System.Drawing.Point(424, 389);
+            this.qmimiLbl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.qmimiLbl.Location = new System.Drawing.Point(371, 292);
             this.qmimiLbl.Name = "qmimiLbl";
-            this.qmimiLbl.Size = new System.Drawing.Size(104, 22);
+            this.qmimiLbl.Size = new System.Drawing.Size(91, 16);
             this.qmimiLbl.TabIndex = 22;
             this.qmimiLbl.Text = "Qmimi";
             this.qmimiLbl.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -236,54 +242,56 @@ namespace FiokVault
             // label7
             // 
             this.label7.BackColor = System.Drawing.SystemColors.Window;
-            this.label7.Font = new System.Drawing.Font("Century Gothic", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label7.ImageAlign = System.Drawing.ContentAlignment.TopRight;
-            this.label7.Location = new System.Drawing.Point(40, 198);
+            this.label7.Location = new System.Drawing.Point(35, 148);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(673, 84);
+            this.label7.Size = new System.Drawing.Size(589, 63);
             this.label7.TabIndex = 23;
             this.label7.Text = "Ju nuk keni regjistruar ende ndonje shpenzim";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(424, 413);
+            this.numericUpDown1.Location = new System.Drawing.Point(371, 310);
+            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDown1.Maximum = new decimal(new int[] {
             10000,
             0,
             0,
             0});
             this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(65, 27);
+            this.numericUpDown1.Size = new System.Drawing.Size(57, 23);
             this.numericUpDown1.TabIndex = 24;
             this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // numericUpDown2
             // 
-            this.numericUpDown2.Location = new System.Drawing.Point(495, 413);
+            this.numericUpDown2.Location = new System.Drawing.Point(433, 310);
+            this.numericUpDown2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.numericUpDown2.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(53, 27);
+            this.numericUpDown2.Size = new System.Drawing.Size(46, 23);
             this.numericUpDown2.TabIndex = 25;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(487, 415);
+            this.label6.Location = new System.Drawing.Point(426, 311);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(12, 20);
+            this.label6.Size = new System.Drawing.Size(10, 15);
             this.label6.TabIndex = 26;
             this.label6.Text = ".";
             // 
             // FiokVault
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(751, 453);
+            this.ClientSize = new System.Drawing.Size(657, 350);
             this.Controls.Add(this.numericUpDown1);
             this.Controls.Add(this.numericUpDown2);
             this.Controls.Add(this.label6);
@@ -303,6 +311,7 @@ namespace FiokVault
             this.Controls.Add(this.dataGridView1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.KeyPreview = true;
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FiokVault";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.FiokVault_Load);
