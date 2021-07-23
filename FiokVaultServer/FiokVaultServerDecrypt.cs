@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -16,11 +17,24 @@ namespace FiokVaultServer
         public byte[] decryptedKey;
         public byte[] decryptMessage(byte[] encryptedData)
         {
-            //String[] messages = decodedString.Split(",");
+
+            string decodedmsg = Encoding.ASCII.GetString(Convert.FromBase64String(Convert.ToBase64String(encryptedData)));
+            Debug.WriteLine(decodedmsg);
+            String[] messages = decodedmsg.Split("$");
+
+            foreach (var e in messages)
+            {
+                Debug.WriteLine(e);
+            }
+
 
             byte[] IVp = new byte[IVLength];
             byte[] encryptedKey = new byte[RSAKeyLength];
             byte[] encryptedMessage = new byte[encryptedData.Length - IVLength - RSAKeyLength];
+            Debug.WriteLine("/n/n" + decodedmsg + "/n/n");
+
+
+
             SplitArray(IVp, encryptedMessage, IVLength, encryptedData);
             SplitArray(encryptedKey, encryptedMessage, RSAKeyLength, encryptedMessage);
 

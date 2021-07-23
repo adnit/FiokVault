@@ -24,22 +24,21 @@ namespace FiokVaultServer
 
             FiokVaultDES des = new FiokVaultDES(this.Key);
 
-            string encryptedMessage = des.Encrypt(Encoding.UTF8.GetString(dataToEncrypt));
-            byte[] encryptedMessageArray = Encoding.UTF8.GetBytes(encryptedMessage);
+            string encryptedMessage = des.Encrypt(Encoding.ASCII.GetString(dataToEncrypt));
+            byte[] encryptedMessageArray = Encoding.ASCII.GetBytes(encryptedMessage);
 
             byte[] toBase64 = new byte[IVLength + encryptedMessage.Length];
 
-            appendArray(IV, toBase64, 0);
-            appendArray(encryptedMessageArray, toBase64, IVLength + encryptedMessageArray.Length);
 
-            byte[] cipherText = Encoding.UTF8.GetBytes(Convert.ToBase64String(toBase64));
+
+
+            string IVstr = Convert.ToBase64String(IV);
+            string encMsg = Convert.ToBase64String(encryptedMessageArray);
+            string cipherTxt = IVstr + "$" + encMsg;
+
+            byte[] cipherText = Convert.FromBase64String(cipherTxt);
 
             return cipherText;
-        }
-
-        void appendArray(byte[] sourceArray, byte[] destinationArray, int offset)
-        {
-            Array.Copy(sourceArray, 0, destinationArray, offset, sourceArray.Length);
         }
     }
 }

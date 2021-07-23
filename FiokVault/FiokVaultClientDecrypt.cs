@@ -28,11 +28,18 @@ namespace FiokVault
                 byte[] message;
                 FiokVaultDES des = new FiokVaultDES(this.Key);
 
-                message = Encoding.ASCII.GetBytes(des.Decrypt(Encoding.UTF8.GetString(encryptedMessage)));
-                //Display the decrypted plaintext to the console. 
-                //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
+                try
+                {
+                    message = Encoding.ASCII.GetBytes(des.Decrypt(Encoding.ASCII.GetString(encryptedMessage)));
+                    //Display the decrypted plaintext to the console. 
+                    //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
 
-                return message;
+                    return message;
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }
             }
         }
 

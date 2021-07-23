@@ -15,7 +15,7 @@ namespace FiokVault
     class FiokVaultClientEncrypt
     {
         static string PublicKeyString = File.ReadAllText("..\\..\\..\\certificate\\publickey.txt");
-        //private static byte[] Key = UTF8Encoding.UTF8.GetBytes(mysecurityKey);
+        //private static byte[] Key = UTF8Encoding.ASCII.GetBytes(mysecurityKey);
         private byte[] Key;
         public int IVLength = 8;
         public FiokVaultClientEncrypt(byte[] Key)
@@ -45,18 +45,19 @@ namespace FiokVault
 
 
                 FiokVaultDES des = new FiokVaultDES(this.Key);
-                string encryptedMessage = des.Encrypt(Encoding.UTF8.GetString(dataToEncrypt));
+                byte[] encryptedMessageArray = des.Encrypt(Encoding.ASCII.GetString(dataToEncrypt));
 
-                byte[] encryptedMessageArray = Encoding.UTF8.GetBytes(encryptedMessage);
-
-                byte[] toBase64 = new byte[IVLength + encryptedKey.Length + encryptedMessage.Length];
+                byte[] toBase64 = new byte[IVLength + encryptedKey.Length + encryptedMessageArray.Length];
 
 
-                appendArray(IV, toBase64, 0);
-                appendArray(encryptedKey, toBase64, IVLength);
-                appendArray(encryptedMessageArray, toBase64, IVLength + encryptedKey.Length);
+                string IVStr = Encoding.ASCII.GetString(IV);
+                string encryptedKeyStr = Encoding.ASCII.GetString(encryptedKey);
+                string encryptedMsgStr = Encoding.ASCII.GetString(encryptedMessageArray);
 
-                byte[] message = Encoding.UTF8.GetBytes(Convert.ToBase64String(toBase64));
+                string messageStr = IVStr + "$" + encryptedKeyStr + "$" + encryptedMsgStr;
+                string encryptedResponse = Convert.ToBase64String(Encoding.ASCII.GetBytes(messageStr));
+
+                byte[] message = Convert.FromBase64String(encryptedResponse);
                 return message;
             }
         }
@@ -136,7 +137,7 @@ namespace FiokVault
             byte[] MyresultArray = MyCrytpoTransform.TransformFinalBlock(cipherText, 0, cipherText.Length);
             MyTripleDESCryptoService.Clear();
 
-            return UTF8Encoding.UTF8.GetString(MyresultArray);
+            return UTF8Encoding.ASCII.GetString(MyresultArray);
         }
 
         static void SplitArray(byte[] firstHalf, byte[] secondHalf, int offset, byte[] sourceArray)
