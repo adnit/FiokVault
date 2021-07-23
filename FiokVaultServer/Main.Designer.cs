@@ -85,6 +85,7 @@ namespace FiokVaultServer
             this.txtServerOutput.ReadOnly = true;
             this.txtServerOutput.Size = new System.Drawing.Size(334, 259);
             this.txtServerOutput.TabIndex = 2;
+            this.txtServerOutput.TextChanged += new System.EventHandler(this.txtServerOutput_TextChanged);
             // 
             // btnStopServer
             // 

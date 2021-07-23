@@ -90,5 +90,12 @@ namespace FiokVaultServer
         {
             txtServerOutput.Text = "";
         }
+
+        private void txtServerOutput_TextChanged(object sender, EventArgs e)
+        {
+            txtServerOutput.SelectionStart = txtServerOutput.TextLength;
+            //scroll to the caret
+            txtServerOutput.ScrollToCaret();
+        }
     }
 }
