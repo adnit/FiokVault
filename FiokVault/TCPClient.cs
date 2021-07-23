@@ -11,7 +11,7 @@ namespace FiokVault
     class TCPClient
     {
         static string hostname = "127.000.000.001";
-        static Int32 port = 13000;
+        static Int32 port = 13001;
 
         public static string sendMessage(string message)
         {

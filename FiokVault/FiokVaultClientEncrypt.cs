@@ -34,7 +34,6 @@ namespace FiokVault
                 provider.GetBytes(IV);
 
 
-                byte[] message;
 
                 //Pass the data to ENCRYPT, the public key information 
                 //(using RSACryptoServiceProvider.ExportParameters(false),
@@ -57,7 +56,7 @@ namespace FiokVault
                 appendArray(encryptedKey, toBase64, IVLength);
                 appendArray(encryptedMessageArray, toBase64, IVLength + encryptedKey.Length);
 
-                message = Encoding.UTF8.GetBytes(Convert.ToBase64String(toBase64));
+                byte[] message = Encoding.UTF8.GetBytes(Convert.ToBase64String(toBase64));
                 return message;
             }
         }
