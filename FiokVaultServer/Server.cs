@@ -42,25 +42,7 @@ namespace FiokVaultServer
             return input.Substring(0, input.IndexOf('?'));
         }
 
-        //GETDATA?username=johndoe
-        public static List<Shpenzimet> GetData(string input)
-        {
-            string username = ReadRequestValue(input, "username");
-            return null;
-        }
-
         ////LOGIN?username=johndoe&password=123123123
-        public static bool VerifyLogin(User user)
-        {
-            string username = user.username;
-            string password = user.password;
-            //foreach (User user in XML.users)
-            //{
-            if ("adnit" == username && "karmberi" == password)
-                return true;
-            //}
-            return false;
-        }
 
         public static User ReadLoginInfo(string input)
         {
@@ -93,7 +75,7 @@ namespace FiokVaultServer
 
 
         //INSERT?username=johndoe&tipi=Blerje&viti=2015&muaji=Mars&qmimi=2
-        public static Shpenzimet ReadInsertInfo(string input)
+        public static User ReadInsertInfo(string input)
         {
             string username = ReadRequestValue(input, "username");
             string tipi = ReadRequestValue(input, "tipi");
@@ -101,16 +83,18 @@ namespace FiokVaultServer
             string muaji = ReadRequestValue(input, "muaji");
             string cmimi = ReadRequestValue(input, "qmimi");
 
-            Enum.TryParse(tipi, out TipiShpenzimit eTipi);
-            Enum.TryParse(muaji, out MuajiVitit eMuaji);
+            User user = new User();
+            user.username = username;
 
             Shpenzimet output = new Shpenzimet();
-            output.tipi = eTipi;
+            output.tipi = tipi;
             output.viti = ushort.Parse(viti);
-            output.muaji = eMuaji;
+            output.muaji = muaji;
             output.cmimi = uint.Parse(cmimi);
 
-            return output;
+            user.shpenzimet.Add(output);
+
+            return user;
         }
 
     }

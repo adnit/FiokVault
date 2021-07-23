@@ -18,24 +18,12 @@ using System.Threading.Tasks;
 
     public class Shpenzimet
 {
-    public TipiShpenzimit tipi { get; set; }
+    public string tipi { get; set; }
     
     public ushort viti { get; set; }
 
-    public MuajiVitit muaji { get; set; }
+    public string muaji { get; set; }
 
     public uint cmimi { get; set; }
 
-}
-
-    public enum TipiShpenzimit
-{
-    Pagese,
-    Blerje
-}
-
-    public enum MuajiVitit
-{
-    Janar,
-    Shkurt
 }
