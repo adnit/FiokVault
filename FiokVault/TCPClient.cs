@@ -26,7 +26,7 @@ namespace FiokVault
                 //SEND DATA TO TCP SERVER; e qon datan
                 stream.Write(data, 0, data.Length);
 
-                data = new Byte[1048];
+                data = new Byte[2048];
 
                 String responseData = String.Empty;
 

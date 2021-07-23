@@ -147,14 +147,17 @@ namespace FiokVaultServer
                   where (string)el.Attribute("username") == username
                   select el;
 
-                    string result = "";
-                    foreach (XElement xUser in currentUser)
+                  string result = "";
+                  foreach (XElement xUser in currentUser)
                     {
                         result += xUser.ToString();
-                    }
-                    Debug.WriteLine("\n\n\n" + result + "\n\n\n");
+                  }
+                  XmlDocument doc = new XmlDocument();
+                  doc.LoadXml(result);
+                SignXML cert = new();
+                var test = cert.SignFile(doc);
 
-                    return result;
+                return test.OuterXml;
                 
             }
             catch(Exception e)

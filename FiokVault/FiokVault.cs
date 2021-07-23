@@ -57,17 +57,32 @@ namespace FiokVault
                     response = "";
                     userData = rawResponse;
                 }
-
+                
                 txtId.Text = ReadUserData(userData, "userid");
                 txtEmail.Text = ReadUserData(userData, "email");
                 txtUser.Text = ReadUserData(userData, "username");
                 txtSex.Text = ReadUserData(userData, "gjinia");
+                Debug.WriteLine(rawResponse);
+                int start = rawResponse.IndexOf("<SignatureValue>");
+                int end = rawResponse.IndexOf("</SignatureValue>");
+                Debug.WriteLine(start);
+                Debug.WriteLine(end);
 
+                string hashVal = rawResponse.Substring(rawResponse.IndexOf("<SignatureValue>")+16, end-start-16);
+                txtHash.Text = hashVal;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(rawResponse);
+                VerifyXMLSignature cert = new();
+                var test = cert.verifyFileSignature(doc);
 
-                if (true)
+                if (test) 
                     pbVerify.BackgroundImage = Properties.Resources.OK;
                 else
+                {
                     pbVerify.BackgroundImage = Properties.Resources.ERROR;
+                    MessageBox.Show("Error");
+                }
+                    
 
                 if (response.Length > 8)
                 {
