@@ -44,11 +44,20 @@ namespace FiokVault
             {
                 string rawResponse = TCPClient.sendMessage(command);
                 int startIndex = rawResponse.IndexOf("<Shpenzimet>");
-                int endIndex = rawResponse.IndexOf("</Shpenzimet>")+13;
+                string response = "";
+                string userData = "";
+                if (startIndex > 0)
+                {
+                    int endIndex = rawResponse.IndexOf("</Shpenzimet>") + 13;
+                    response = rawResponse.Substring(rawResponse.IndexOf("<Shpenzimet>"), endIndex - startIndex);
+                    userData = rawResponse.Substring(0, startIndex);
+                }
+                else
+                {
+                    response = "";
+                    userData = rawResponse;
+                }
 
-                string response = rawResponse.Substring(rawResponse.IndexOf("<Shpenzimet>") , endIndex-startIndex);
-
-                string userData = rawResponse.Substring(0, startIndex);
                 txtId.Text = ReadUserData(userData, "userid");
                 txtEmail.Text = ReadUserData(userData, "email");
                 txtUser.Text = ReadUserData(userData, "username");

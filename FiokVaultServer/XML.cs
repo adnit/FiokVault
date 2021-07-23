@@ -147,12 +147,6 @@ namespace FiokVaultServer
                   where (string)el.Attribute("username") == username
                   select el;
 
-                if (currentUser.Elements("Shpenzimet").Count() == 0)
-                {
-                    return "OK";
-                }
-                else
-                {
                     string result = "";
                     foreach (XElement xUser in currentUser)
                     {
@@ -161,7 +155,7 @@ namespace FiokVaultServer
                     Debug.WriteLine("\n\n\n" + result + "\n\n\n");
 
                     return result;
-                }
+                
             }
             catch(Exception e)
             {
