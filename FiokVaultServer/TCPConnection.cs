@@ -96,6 +96,11 @@ namespace FiokVaultServer
                             string username = Server.GetData(data);
                             returnMessage = XML.GetData(username);
                             break;
+                        case "REMOVE":
+                            string usr = Server.GetData(data);
+                            int index = Server.RemoveData(data);
+                            returnMessage = XML.DeleteRow(index,usr);
+                            break;
                         default:
                             returnMessage = "ERROR";
                             break;

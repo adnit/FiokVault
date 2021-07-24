@@ -81,7 +81,7 @@ namespace FiokVault
                 else
                 {
                     pbVerify.BackgroundImage = Properties.Resources.ERROR;
-                    MessageBox.Show("Error");
+                    MessageBox.Show("Error xml nuk u validua");
                 }
                     
 
@@ -90,18 +90,21 @@ namespace FiokVault
                     StringReader SR = new StringReader(response);
                     ds.Clear();
                     ds.ReadXml(SR);
+                    button1.Enabled = true;
                     dataGridView1.DataSource = ds.Tables[0];
                     label7.Visible = false;
                 }
                 else
                 {
                     label7.Visible = true;
+                    button1.Enabled = false;
                 }
             }
             catch(Exception ex)
             {
                 label7.Text = ex.Message;
                 label7.Visible = true;
+                button1.Enabled = false;
             }
         } 
         private void reloadBtn_Click(object sender, EventArgs e)
@@ -175,6 +178,45 @@ namespace FiokVault
             dr["muaji"] = muaji;
             dr["qmimi"] = qmimi;
             dt.Rows.InsertAt(dr, 0);
+        }
+        private void deleteRow()
+        {
+            string command
+                    = "REMOVE"
+                    + "?username=" + SessionStorage.username
+                    + "&indexi=" + dataGridView1.CurrentCell.RowIndex;
+            Debug.WriteLine(command);
+            try
+            {
+                string response = TCPClient.sendMessage(command);
+
+                if (response == "OK")
+                {
+                    ds.Tables[0].Rows[dataGridView1.CurrentCell.RowIndex].Delete();
+                }
+                else if (response == "ERROR")
+                {
+                    throw new Exception("Emri i perdoruesit ose fjalekalimi jane gabim");
+                }
+                else
+                {
+                    throw new Exception("Ka ndodhur nje gabim kontaktoni adminin");
+                }
+            }
+            catch (Exception ex)
+            { 
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            deleteRow();
+            var dt = ds.Tables[0];
+            if(dt.Rows.Count == 0)
+            {
+                label7.Visible = true;
+                button1.Enabled = false;
+            }
         }
     }
 }

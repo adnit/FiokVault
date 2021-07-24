@@ -58,6 +58,7 @@ namespace FiokVault
             this.txtSex = new System.Windows.Forms.TextBox();
             this.lblSex = new System.Windows.Forms.Label();
             this.pbVerify = new System.Windows.Forms.PictureBox();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.vitiDropDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
@@ -89,7 +90,7 @@ namespace FiokVault
             // 
             this.reloadBtn.BackgroundImage = global::FiokVault.Properties.Resources.reloadIcon1;
             this.reloadBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.reloadBtn.Location = new System.Drawing.Point(627, 32);
+            this.reloadBtn.Location = new System.Drawing.Point(576, 32);
             this.reloadBtn.Name = "reloadBtn";
             this.reloadBtn.Size = new System.Drawing.Size(45, 45);
             this.reloadBtn.TabIndex = 10;
@@ -390,11 +391,23 @@ namespace FiokVault
             this.pbVerify.TabIndex = 31;
             this.pbVerify.TabStop = false;
             // 
+            // button1
+            // 
+            this.button1.BackgroundImage = global::FiokVault.Properties.Resources.trash;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.button1.Location = new System.Drawing.Point(627, 32);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(45, 45);
+            this.button1.TabIndex = 32;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // FiokVault
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(751, 547);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.pbVerify);
             this.Controls.Add(this.lblHash);
             this.Controls.Add(this.lblEmail);
@@ -470,5 +483,6 @@ namespace FiokVault
         private System.Windows.Forms.TextBox txtSex;
         private System.Windows.Forms.Label lblSex;
         private System.Windows.Forms.PictureBox pbVerify;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -52,6 +52,15 @@ namespace FiokVaultServer
             string username = parsed["username"];
             return username;
         }
+        public static int RemoveData(string input)
+        {
+            var req = input.Substring(input.IndexOf('?') + 1);
+            var parsed = HttpUtility.ParseQueryString(req);
+
+            string index = parsed["indexi"];
+            int indexInt = Int32.Parse(index);
+            return indexInt;
+        }
 
         ////LOGIN?username=johndoe&password=123123123
 

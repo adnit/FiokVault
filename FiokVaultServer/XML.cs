@@ -10,6 +10,7 @@ using System.Xml.Linq;
 using System.Security.Cryptography;
 using System.IO;
 using System.Web;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace FiokVaultServer
 {
@@ -134,6 +135,27 @@ namespace FiokVaultServer
 
             }
 
+        }
+        public static string DeleteRow(int index, string username)
+        {
+            try
+            {
+                XElement root = XElement.Load(XMLUrl);
+                IEnumerable<XElement> Users = root.Elements("User");
+                IEnumerable<XElement> currentUser =
+                  from el in Users
+                  where (string)el.Attribute("username") == username
+                  select el;
+                IEnumerable<XElement> Shpenzimet = currentUser.Elements("Shpenzimet");
+                XElement rreshti = Shpenzimet.Elements("Shpenzimi").ElementAt(index);
+                rreshti.Remove();
+                root.Save(XMLUrl);
+                return "OK";
+            }
+            catch (Exception e)
+            {
+                return "ERROR";
+            }
         }
         public static string GetData(string username)
         {

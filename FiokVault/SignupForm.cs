@@ -25,6 +25,7 @@ namespace FiokVault
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
             gjiniaBox.SelectedIndex = -1;
+            AcceptButton = signupBtn;
         }
 
         private void label1_Click(object sender, EventArgs e)
