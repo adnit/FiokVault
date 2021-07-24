@@ -8,31 +8,23 @@ using System.Threading.Tasks;
 
 namespace FiokVault
 {
-    class FiokVaultClientDecrypt
+    static class FiokVaultClientDecrypt
     {
-        public byte[] Key;
-        int IVLength = 8;
-        public FiokVaultClientDecrypt(byte[] Key)
-        {
-            this.Key = Key;
-        }
+        static int IVLength = 8;
 
-        public byte[] decryptMessage(byte[] encryptedData)
+        public static string decryptMessage(byte[] inputData, byte[] Key)
         {
+            string encryptedData = Encoding.ASCII.GetString(inputData);
+            string[] inputMessage = encryptedData.Split("//+//");
+
             byte[] IVp = new byte[IVLength];
-            byte[] encryptedMessage = new byte[encryptedData.Length - IVLength];
-            SplitArray(IVp, encryptedMessage, IVLength, encryptedData);
 
-            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-            {
-                byte[] message;
-                FiokVaultDES des = new FiokVaultDES(this.Key);
+                string message;
+                FiokVaultDES des = new FiokVaultDES(Key);
 
                 try
                 {
-                    message = Encoding.ASCII.GetBytes(des.Decrypt(Encoding.ASCII.GetString(encryptedMessage)));
-                    //Display the decrypted plaintext to the console. 
-                    //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
+                    message = des.Decrypt(inputMessage[1]);
 
                     return message;
                 }
@@ -40,13 +32,6 @@ namespace FiokVault
                 {
                     return null;
                 }
-            }
-        }
-
-        static void SplitArray(byte[] firstHalf, byte[] secondHalf, int offset, byte[] sourceArray)
-        {
-            Array.Copy(sourceArray, firstHalf, offset);
-            Array.Copy(sourceArray, offset, secondHalf, 0, secondHalf.Length);
         }
 
     }

@@ -16,16 +16,12 @@ namespace FiokVault
     {
         static string PublicKeyString = File.ReadAllText("..\\..\\..\\certificate\\publickey.txt");
         //private static byte[] Key = UTF8Encoding.ASCII.GetBytes(mysecurityKey);
-        private byte[] Key;
+        public static byte[] byteKey;
         public int IVLength = 8;
-        public FiokVaultClientEncrypt(byte[] Key)
-        {
-            this.Key = Key;
-        }
         public static byte[] encryptMessage(string input)
         {
 
-            byte[] byteKey = TCPClient.generateSafeRandom(64);
+            byteKey = TCPClient.generateSafeRandom(64);
 
             string stringIV = Convert.ToBase64String(TCPClient.generateSafeRandom(8));
 
@@ -39,7 +35,6 @@ namespace FiokVault
             input = (stringIV) + "//+//" + (stringRSA) + "//+//" + (stringDes);
 
             byte[] output = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(input)));
-
             return output;
         }
 
@@ -91,10 +86,10 @@ namespace FiokVault
             return parameters;
         }
 
-        public string DESDecrypt(string TextToDecrypt)
+        public static string DESDecrypt(string TextToDecrypt)
         {
             MD5CryptoServiceProvider MyMD5CryptoService = new MD5CryptoServiceProvider();
-            byte[] MysecurityKeyArray = MyMD5CryptoService.ComputeHash(this.Key);
+            byte[] MysecurityKeyArray = MyMD5CryptoService.ComputeHash(byteKey);
             MyMD5CryptoService.Clear();
 
             var MyTripleDESCryptoService = new TripleDESCryptoServiceProvider();

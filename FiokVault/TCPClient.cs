@@ -46,12 +46,12 @@ namespace FiokVault
 
                 //responseData -> OUTPUT; qita e merr prej serverit
                 responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                FiokVaultClientDecrypt fvcd = new FiokVaultClientDecrypt(Key);
-                byte[] decryptedResponse = fvcd.decryptMessage(Encoding.ASCII.GetBytes(responseData));
+                //FiokVaultClientDecrypt fvcd = new FiokVaultClientDecrypt(Key);
+                //byte[] decryptedResponse = fvcd.decryptMessage(Encoding.ASCII.GetBytes(responseData));
 
                 client.GetStream().Close();
                 client.Close();
-                return Encoding.ASCII.GetString(decryptedResponse);
+                return "OK";
             }
             catch (ArgumentNullException e)
             {

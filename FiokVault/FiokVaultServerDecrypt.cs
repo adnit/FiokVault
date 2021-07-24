@@ -15,6 +15,7 @@ namespace FiokVaultServer
         static int RSAKeyLength = 256;
         static string PrivateKeyString = File.ReadAllText("..\\..\\..\\certificate\\privkey.pem");
         public static byte[] savedDecryptedKey;
+        public static byte[] savedIV;
         public static string decryptMessage(byte[] inputData)
         {
             string encryptedData = Encoding.ASCII.GetString(inputData);
@@ -23,6 +24,7 @@ namespace FiokVaultServer
 
 
             byte[] IVp = Convert.FromBase64String(inputMessage[0]);
+            savedIV = IVp;
             byte[] encryptedKey = Convert.FromBase64String(inputMessage[1]);
             byte[] encryptedMessage = Convert.FromBase64String(inputMessage[2]);
 
