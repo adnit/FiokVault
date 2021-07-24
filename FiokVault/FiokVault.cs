@@ -22,14 +22,14 @@ namespace FiokVault
             InitializeComponent();
             StartPosition = FormStartPosition.CenterScreen;
             comboBox1.SelectedIndex = -1;
-
+            ds = new DataSet();
         }
 
         private void FiokVault_Load(object sender, EventArgs e)
         {
           reload();
         }
-
+        DataSet ds;
         private static string ReadUserData(string input, string value)
         {
             int startIndex = input.IndexOf(value) + value.Length + 2;
@@ -88,8 +88,7 @@ namespace FiokVault
                 if (response.Length > 8)
                 {
                     StringReader SR = new StringReader(response);
-
-                    DataSet ds = new DataSet();
+                    ds.Clear();
                     ds.ReadXml(SR);
                     dataGridView1.DataSource = ds.Tables[0];
                     label7.Visible = false;
@@ -132,7 +131,11 @@ namespace FiokVault
                     
                     if (response == "OK")
                     {
-                        reload();
+                        if (label7.Visible == false)
+                        {
+                            insert2Table(comboBox1.SelectedItem.ToString(), vitiDropDown.Value.ToString(), comboBox2.SelectedItem.ToString(), qmimi.ToString());
+                        }
+                        else reload();
                     }
                     else if (response == "ERROR")
                     {
@@ -157,6 +160,21 @@ namespace FiokVault
         private void btnLogOut_Click(object sender, EventArgs e)
         {
             Close();
+        }
+        private void insert2Table(string tipi, string viti, string muaji, string qmimi)
+        {
+            // ds.ReadXml(SR);
+            // dataGridView1.DataSource = ds.Tables[0];
+            // ds.Tables[0].Columns["tipi"].ColumnName = "Tipi";
+            // dataGridView1.Rows.Insert(0, "six", "seven", "eight");
+            var dt = ds.Tables[0];
+            DataRow dr = dt.NewRow();
+           
+            dr["tipi"] = tipi;
+            dr["viti"] = viti;
+            dr["muaji"] = muaji;
+            dr["qmimi"] = qmimi;
+            dt.Rows.InsertAt(dr, 0);
         }
     }
 }
