@@ -43,6 +43,7 @@ namespace FiokVault
             try
             {
                 string rawResponse = TCPClient.sendMessage(command);
+                Debug.WriteLine("hello" + rawResponse);
                 int startIndex = rawResponse.IndexOf("<Shpenzimet>");
                 string response = "";
                 string userData = "";
@@ -64,11 +65,10 @@ namespace FiokVault
 
                 this.Text = "Dashboard - " + txtUser.Text;
                 txtSex.Text = ReadUserData(userData, "gjinia");
-                Debug.WriteLine(rawResponse);
+
                 int start = rawResponse.IndexOf("<SignatureValue>");
                 int end = rawResponse.IndexOf("</SignatureValue>");
-                Debug.WriteLine(start);
-                Debug.WriteLine(end);
+
 
                 string hashVal = rawResponse.Substring(rawResponse.IndexOf("<SignatureValue>")+16, end-start-16);
                 txtHash.Text = hashVal;

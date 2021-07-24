@@ -15,7 +15,7 @@ namespace FiokVault
         public static string decryptMessage(byte[] inputData, byte[] Key)
         {
             string encryptedData = Encoding.ASCII.GetString(inputData);
-            string[] inputMessage = encryptedData.Split("//+//");
+            string[] inputMessage = encryptedData.Split("$");
 
             byte[] IVp = new byte[IVLength];
 

@@ -24,21 +24,20 @@ namespace FiokVault
 
                 NetworkStream stream = client.GetStream();
 
-                Debug.WriteLine(encryptedMessage.Length);
                 stream.Write(encryptedMessage, 0, encryptedMessage.Length);
 
-                byte[] data = new byte[2048];
+                byte[] data = new byte[4096];
 
                 String rawResponseData = String.Empty;
                 Int32 bytes = stream.Read(data, 0, data.Length);
+                var dataResponse = Encoding.ASCII.GetString(data, 0, bytes);
+                string responseData = FiokVaultClientDecrypt.decryptMessage(Encoding.ASCII.GetBytes(dataResponse), FiokVaultClientEncrypt.byteKey);
 
-                string responseData = FiokVaultClientDecrypt.decryptMessage(data, FiokVaultClientEncrypt.byteKey);
-
-                Debug.Write(responseData);
+                Debug.WriteLine("response " + responseData);
 
                 client.GetStream().Close();
                 client.Close();
-                return "OK";
+                return responseData;
             }
             catch (ArgumentNullException e)
             {

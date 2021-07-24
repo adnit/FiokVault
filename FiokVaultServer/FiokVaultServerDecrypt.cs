@@ -19,7 +19,7 @@ namespace FiokVaultServer
         public static string decryptMessage(byte[] inputData)
         {
             string encryptedData = Encoding.ASCII.GetString(inputData);
-            string[] inputMessage = encryptedData.Split("//+//");
+            string[] inputMessage = encryptedData.Split("$");
 
 
 

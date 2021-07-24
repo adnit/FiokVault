@@ -25,7 +25,7 @@ namespace FiokVaultServer
 
             string IVstr = Convert.ToBase64String(IV);
             string encMsg = Convert.ToBase64String(encryptedMessage);
-            string cipherTxt = IVstr + "//+//" + encMsg;
+            string cipherTxt = IVstr + "$" + encMsg;
 
             byte[] output = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(cipherTxt)));
             return output;

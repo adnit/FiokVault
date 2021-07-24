@@ -32,7 +32,7 @@ namespace FiokVault
             byte[] byteDes = des.Encrypt(input);
             string stringDes = Convert.ToBase64String(byteDes);
 
-            input = (stringIV) + "//+//" + (stringRSA) + "//+//" + (stringDes);
+            input = (stringIV) + "$" + (stringRSA) + "$" + (stringDes);
 
             byte[] output = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(input)));
             return output;

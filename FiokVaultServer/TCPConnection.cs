@@ -64,7 +64,7 @@ namespace FiokVaultServer
             try
             {
                 string data = null;
-                Byte[] bytes = new Byte[2048];
+                Byte[] bytes = new Byte[4096];
                 // Get a stream object for reading and writing
                 NetworkStream stream = client.GetStream();
 
@@ -74,10 +74,8 @@ namespace FiokVaultServer
                 while ((i = stream.Read(bytes, 0, bytes.Length)) != 0)
                 {
                     data = Encoding.ASCII.GetString(bytes, 0, i);
-
                     data = FiokVaultServerDecrypt.decryptMessage(Encoding.ASCII.GetBytes(data));
-
-                    PrintLine("Received: " + data);
+                    PrintLine("Received after decryption: " + data);
 
                     string returnMessage = "";
                     User user = new User();
@@ -106,6 +104,7 @@ namespace FiokVaultServer
                     byte[] response = FiokVaultServerEncrypt.encryptMessage(returnMessage, FiokVaultServerDecrypt.savedDecryptedKey);
                     //ma saktesisht qitu e dergon
                     stream.Write(response, 0, response.Length);
+
 
                     if (returnMessage == "ERROR" || returnMessage == "OK")
                         PrintLine("Sent: " + returnMessage);
