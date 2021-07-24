@@ -7,38 +7,28 @@ using System.Threading.Tasks;
 
 namespace FiokVaultServer
 {
-    class FiokVaultServerEncrypt
+    static class FiokVaultServerEncrypt
     {
-        public byte[] Key;
-        public int IVLength = 8;
-        public FiokVaultServerEncrypt(byte[] Key)
+        static public int IVLength = 8;
+        public static byte[] encryptMessage(string data, byte[] Key)
         {
-            this.Key = Key;
-        }
+            string responseMessage = "OK";
 
-        public byte[] encryptMessage(byte[] dataToEncrypt)
-        {
+            FiokVaultDES des = new FiokVaultDES(FiokVaultServerDecrypt.savedDecryptedKey);
+            byte[] encryptedMessage = des.Encrypt(responseMessage);
+
+            //IV diqka
             byte[] IV = new byte[IVLength];
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
             provider.GetBytes(IV);
-
-            FiokVaultDES des = new FiokVaultDES(this.Key);
-
-            string encryptedMessage = des.Encrypt(Encoding.ASCII.GetString(dataToEncrypt));
-            byte[] encryptedMessageArray = Encoding.ASCII.GetBytes(encryptedMessage);
-
-            byte[] toBase64 = new byte[IVLength + encryptedMessage.Length];
-
-
-
+            byte[] toBase64 = new byte[IV.Length + encryptedMessage.Length];
 
             string IVstr = Convert.ToBase64String(IV);
-            string encMsg = Convert.ToBase64String(encryptedMessageArray);
-            string cipherTxt = IVstr + "$" + encMsg;
+            string encMsg = Convert.ToBase64String(encryptedMessage);
+            string cipherTxt = IVstr + "//+//" + encMsg;
 
-            byte[] cipherText = Convert.FromBase64String(cipherTxt);
-
-            return cipherText;
+            byte[] output = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(cipherTxt)));
+            return output;
         }
     }
 }

@@ -28,38 +28,6 @@ namespace FiokVault
                 usernameTxt.Text = SessionStorage.username;
                 ActiveControl = passwordTxt;
             }
-
-
-            //Client -> Server 
-            var byteMessage = FiokVaultClientEncrypt.encryptMessage("hello i am homo");
-            var stringMessage = FiokVaultServerDecrypt.decryptMessage(byteMessage);
-
-
-            //Server -> Client
-            //Server
-            string responseMessage = "OK";
-            byte[] byteResponseMessage = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(responseMessage)));
-
-
-            FiokVaultDES des = new FiokVaultDES(FiokVaultServerDecrypt.savedDecryptedKey);
-            byte[] encryptedMessage = des.Encrypt(Convert.ToBase64String(byteResponseMessage));
-
-            //IV diqka
-            byte[] IV = new byte[8];
-            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-            provider.GetBytes(IV);
-            byte[] toBase64 = new byte[IV.Length + encryptedMessage.Length];
-
-            string IVstr = Convert.ToBase64String(IV);
-            string encMsg = Convert.ToBase64String(encryptedMessage);
-            string cipherTxt = IVstr + "//+//" + encMsg;
-
-            byte[] cipherText = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(cipherTxt)));
-           
-            
-            //Client
-            var clientResponse = FiokVaultClientDecrypt.decryptMessage(cipherText, FiokVaultClientEncrypt.byteKey);
-            Debug.WriteLine(clientResponse);
         }
 
         private void label1_Click(object sender, EventArgs e)

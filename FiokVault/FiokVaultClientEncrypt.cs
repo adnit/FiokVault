@@ -12,12 +12,12 @@ using Org.BouncyCastle.Security;
 
 namespace FiokVault
 {
-    class FiokVaultClientEncrypt
+    static class FiokVaultClientEncrypt
     {
         static string PublicKeyString = File.ReadAllText("..\\..\\..\\certificate\\publickey.txt");
         //private static byte[] Key = UTF8Encoding.ASCII.GetBytes(mysecurityKey);
         public static byte[] byteKey;
-        public int IVLength = 8;
+        public static int IVLength = 8;
         public static byte[] encryptMessage(string input)
         {
 
@@ -125,7 +125,7 @@ namespace FiokVault
         }
 
 
-        void appendArray(byte[] sourceArray, byte[] destinationArray, int offset)
+        static void appendArray(byte[] sourceArray, byte[] destinationArray, int offset)
         {
             Array.Copy(sourceArray, 0, destinationArray, offset, sourceArray.Length);
         }
