@@ -29,44 +29,12 @@ namespace FiokVault
             }
 
 
-            //Client
-            string stringMessage = "testingString";
+            //Client 
+            var byteMessage = FiokVaultClientEncrypt.encryptMessage("hello i am homo");
+            var stringMessage = FiokVaultServerDecrypt.decryptMessage(byteMessage);
 
-            byte[] byteKey = TCPClient.generateSafeRandom(64);
-
-            string stringIV = Convert.ToBase64String(TCPClient.generateSafeRandom(8));
-
-            byte[] byteRSA = FiokVaultClientEncrypt.RSAEncrypt(byteKey, FiokVaultClientEncrypt.getPublicParameters(File.ReadAllText("..\\..\\..\\certificate\\publickey.txt")), false);
-            string stringRSA = Convert.ToBase64String(byteRSA);
-
-            FiokVaultDES des = new FiokVaultDES(byteKey);
-            byte[] byteDes = des.Encrypt(stringMessage);
-            string stringDes = Convert.ToBase64String(byteDes);
-
-            stringMessage = (stringIV) + "//+//" + (stringRSA) + "//+//" + (stringDes);
-            string sMessage = Convert.ToBase64String(Encoding.ASCII.GetBytes(stringMessage));
-            var bMessage = Convert.FromBase64String(sMessage);
-
-            //byteMessage = Convert.FromBase64String(stringMessage);
-            // byteMessage = Convert.FromBase64String(stringRSA);
-            // byteMessage = Convert.FromBase64String(stringDes);
-
-
+            Debug.WriteLine("\n\n\n\n");
             Debug.WriteLine(stringMessage);
-
-            ////Server
-
-            var arrivedMessage = Convert.ToBase64String(bMessage);
-            var byteMessagess = Encoding.ASCII.GetString(Convert.FromBase64String(arrivedMessage));
-            Debug.WriteLine("\n\n\n\n");
-            Debug.WriteLine(byteMessagess);
-
-
-            FiokVaultServerDecrypt fvsd = new FiokVaultServerDecrypt();
-            string decryptedMessage = fvsd.decryptMessage(byteMessagess);
-            //byte[] sentKey = fvsd.decryptedKey;
-            Debug.WriteLine("\n\n\n\n");
-            Debug.WriteLine(decryptedMessage);
 
 
         }

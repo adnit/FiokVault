@@ -22,44 +22,25 @@ namespace FiokVault
         {
             this.Key = Key;
         }
-        public byte[] encryptMessage(byte[] dataToEncrypt)
+        public static byte[] encryptMessage(string input)
         {
-            //Create a new instance of RSACryptoServiceProvider to generate
-            //public and private key data.
-            using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
-            {
 
-                byte[] IV = new byte[IVLength];
-                RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
-                provider.GetBytes(IV);
+            byte[] byteKey = TCPClient.generateSafeRandom(64);
 
+            string stringIV = Convert.ToBase64String(TCPClient.generateSafeRandom(8));
 
+            byte[] byteRSA = FiokVaultClientEncrypt.RSAEncrypt(byteKey, FiokVaultClientEncrypt.getPublicParameters(File.ReadAllText("..\\..\\..\\certificate\\publickey.txt")), false);
+            string stringRSA = Convert.ToBase64String(byteRSA);
 
-                //Pass the data to ENCRYPT, the public key information 
-                //(using RSACryptoServiceProvider.ExportParameters(false),
-                //and a boolean flag specifying no OAEP padding.
-                RSAParameters parameters = getPublicParameters(PublicKeyString);
-                byte[] encryptedKey = RSAEncrypt(dataToEncrypt, parameters, false);
+            FiokVaultDES des = new FiokVaultDES(byteKey);
+            byte[] byteDes = des.Encrypt(input);
+            string stringDes = Convert.ToBase64String(byteDes);
 
+            input = (stringIV) + "//+//" + (stringRSA) + "//+//" + (stringDes);
 
+            byte[] output = Convert.FromBase64String(Convert.ToBase64String(Encoding.ASCII.GetBytes(input)));
 
-
-                FiokVaultDES des = new FiokVaultDES(this.Key);
-                byte[] encryptedMessageArray = des.Encrypt(Encoding.ASCII.GetString(dataToEncrypt));
-
-                byte[] toBase64 = new byte[IVLength + encryptedKey.Length + encryptedMessageArray.Length];
-
-
-                string IVStr = Encoding.ASCII.GetString(IV);
-                string encryptedKeyStr = Encoding.ASCII.GetString(encryptedKey);
-                string encryptedMsgStr = Encoding.ASCII.GetString(encryptedMessageArray);
-
-                string messageStr = IVStr + "$" + encryptedKeyStr + "$" + encryptedMsgStr;
-                string encryptedResponse = Convert.ToBase64String(Encoding.ASCII.GetBytes(messageStr));
-
-                byte[] message = Convert.FromBase64String(encryptedResponse);
-                return message;
-            }
+            return output;
         }
 
         public static byte[] RSAEncrypt(byte[] DataToEncrypt, RSAParameters RSAKeyInfo, bool DoOAEPPadding)

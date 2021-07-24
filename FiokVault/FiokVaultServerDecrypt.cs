@@ -14,10 +14,10 @@ namespace FiokVaultServer
         static int IVLength = 8;
         static int RSAKeyLength = 256;
         static string PrivateKeyString = File.ReadAllText("..\\..\\..\\certificate\\privkey.pem");
-        public byte[] decryptedKey;
-        public string decryptMessage(string encryptedData)
+        public static byte[] savedDecryptedKey;
+        public static string decryptMessage(byte[] inputData)
         {
-
+            string encryptedData = Encoding.ASCII.GetString(inputData);
             string[] inputMessage = encryptedData.Split("//+//");
 
 
@@ -36,7 +36,7 @@ namespace FiokVaultServer
                 //(using RSACryptoServiceProvider.ExportParameters(true),
                 //and a boolean flag specifying no OAEP padding.
                 byte[] decryptedKey = RSADecrypt(encryptedKey, RSA.ExportParameters(true), false);
-                this.decryptedKey = decryptedKey;
+                savedDecryptedKey = decryptedKey;
 
                 FiokVaultDES des = new FiokVaultDES(decryptedKey);
 
