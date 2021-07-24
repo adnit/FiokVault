@@ -20,34 +20,21 @@ namespace FiokVault
             {
                 TcpClient client = new TcpClient(hostname, port);
 
-                //message -> INPUT; qikjo i shkon serverit
-
-                byte[] Key = generateSafeRandom(8);
-
                 byte[] encryptedMessage = FiokVaultClientEncrypt.encryptMessage(message);
-
-                Debug.WriteLine(Convert.ToBase64String(encryptedMessage));
-                Debug.WriteLine(Convert.ToBase64String(encryptedMessage));
 
                 NetworkStream stream = client.GetStream();
 
-
-
-                //SEND DATA TO TCP SERVER; e qon datan
+                Debug.WriteLine(encryptedMessage.Length);
                 stream.Write(encryptedMessage, 0, encryptedMessage.Length);
 
                 byte[] data = new byte[2048];
 
-                String responseData = String.Empty;
-
-
-                //GET RESPONSE
+                String rawResponseData = String.Empty;
                 Int32 bytes = stream.Read(data, 0, data.Length);
 
-                //responseData -> OUTPUT; qita e merr prej serverit
-                responseData = Encoding.ASCII.GetString(data, 0, bytes);
-                //FiokVaultClientDecrypt fvcd = new FiokVaultClientDecrypt(Key);
-                //byte[] decryptedResponse = fvcd.decryptMessage(Encoding.ASCII.GetBytes(responseData));
+                string responseData = FiokVaultClientDecrypt.decryptMessage(data, FiokVaultClientEncrypt.byteKey);
+
+                Debug.Write(responseData);
 
                 client.GetStream().Close();
                 client.Close();

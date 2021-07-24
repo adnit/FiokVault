@@ -49,7 +49,6 @@ namespace FiokVault
             this.label1.Size = new System.Drawing.Size(95, 35);
             this.label1.TabIndex = 0;
             this.label1.Text = "Login";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // label2
             // 
@@ -69,7 +68,6 @@ namespace FiokVault
             this.usernameTxt.Name = "usernameTxt";
             this.usernameTxt.Size = new System.Drawing.Size(246, 23);
             this.usernameTxt.TabIndex = 0;
-            this.usernameTxt.TextChanged += new System.EventHandler(this.usernameTxt_TextChanged);
             // 
             // passwordTxt
             // 
@@ -79,7 +77,6 @@ namespace FiokVault
             this.passwordTxt.PasswordChar = '*';
             this.passwordTxt.Size = new System.Drawing.Size(246, 23);
             this.passwordTxt.TabIndex = 1;
-            this.passwordTxt.TextChanged += new System.EventHandler(this.passwordTxt_TextChanged);
             // 
             // label3
             // 
@@ -121,7 +118,6 @@ namespace FiokVault
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(109, 22);
             this.progressBar1.TabIndex = 5;
-            this.progressBar1.Click += new System.EventHandler(this.progressBar1_Click);
             // 
             // LoginForm
             // 

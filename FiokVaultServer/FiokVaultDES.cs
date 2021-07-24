@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace FiokVaultServer
 {
@@ -21,9 +22,9 @@ namespace FiokVaultServer
         {
             this.Key = Key;
         }
-        public string Encrypt(string TextToEncrypt)
+        public byte[] Encrypt(string TextToEncrypt)
         {
-            byte[] MyEncryptedArray = Encoding.UTF8.GetBytes(TextToEncrypt);
+            byte[] MyEncryptedArray = Encoding.ASCII.GetBytes(TextToEncrypt);
 
             MD5CryptoServiceProvider MyMD5CryptoService = new MD5CryptoServiceProvider();
             byte[] MysecurityKeyArray = MyMD5CryptoService.ComputeHash(Key);
@@ -39,16 +40,23 @@ namespace FiokVaultServer
             MyTripleDESCryptoService.Key = MysecurityKeyArray;
             MyTripleDESCryptoService.Mode = CipherMode.CBC;
             MyTripleDESCryptoService.Padding = PaddingMode.PKCS7;
+            try
+            {
+                var MyCrytpoTransform = MyTripleDESCryptoService.CreateEncryptor();
 
-            var MyCrytpoTransform = MyTripleDESCryptoService.CreateEncryptor();
+                byte[] MyresultArray = MyCrytpoTransform.TransformFinalBlock(MyEncryptedArray, 0, MyEncryptedArray.Length);
+                MyTripleDESCryptoService.Clear();
 
-            byte[] MyresultArray = MyCrytpoTransform.TransformFinalBlock(MyEncryptedArray, 0, MyEncryptedArray.Length);
-            MyTripleDESCryptoService.Clear();
+                byte[] encrypted = prepandToArray(IV, MyresultArray);
+                Console.WriteLine(encrypted.Length);
 
-            byte[] encrypted = prepandToArray(IV, MyresultArray);
-            Console.WriteLine(encrypted.Length);
-
-            return Convert.ToBase64String(encrypted, 0, encrypted.Length);
+                return encrypted;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.ToString());
+                return null;
+            }
         }
 
         static byte[] prepandToArray(byte[] prepand, byte[] array)
@@ -88,7 +96,7 @@ namespace FiokVaultServer
             byte[] MyresultArray = MyCrytpoTransform.TransformFinalBlock(cipherText, 0, cipherText.Length);
             MyTripleDESCryptoService.Clear();
 
-            return UTF8Encoding.UTF8.GetString(MyresultArray);
+            return Encoding.ASCII.GetString(MyresultArray);
         }
 
         static void SplitArray(byte[] firstHalf, byte[] secondHalf, int offset, byte[] sourceArray)
