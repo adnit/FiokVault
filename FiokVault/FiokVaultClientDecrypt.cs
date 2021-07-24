@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FiokVault
 {
@@ -19,19 +20,19 @@ namespace FiokVault
 
             byte[] IVp = new byte[IVLength];
 
-                string message;
-                FiokVaultDES des = new FiokVaultDES(Key);
+            string message;
+            FiokVaultDES des = new FiokVaultDES(Key);
 
-                try
-                {
-                    message = des.Decrypt(inputMessage[1]);
+            try
+            {
+                message = des.Decrypt(inputMessage[1]);
 
-                    return message;
-                }
-                catch (Exception e)
-                {
-                    return null;
-                }
+                return message;
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
         }
 
     }

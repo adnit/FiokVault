@@ -12,7 +12,7 @@ namespace FiokVaultServer
         static public int IVLength = 8;
         public static byte[] encryptMessage(string data, byte[] Key)
         {
-            string responseMessage = "OK";
+            string responseMessage = data;
 
             FiokVaultDES des = new FiokVaultDES(FiokVaultServerDecrypt.savedDecryptedKey);
             byte[] encryptedMessage = des.Encrypt(responseMessage);

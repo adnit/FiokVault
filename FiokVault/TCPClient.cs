@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Diagnostics;
+using System.Windows.Forms;
 
 namespace FiokVault
 {
@@ -32,8 +33,6 @@ namespace FiokVault
                 Int32 bytes = stream.Read(data, 0, data.Length);
                 var dataResponse = Encoding.ASCII.GetString(data, 0, bytes);
                 string responseData = FiokVaultClientDecrypt.decryptMessage(Encoding.ASCII.GetBytes(dataResponse), FiokVaultClientEncrypt.byteKey);
-
-                Debug.WriteLine("response " + responseData);
 
                 client.GetStream().Close();
                 client.Close();

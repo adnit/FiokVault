@@ -25,7 +25,7 @@ namespace FiokVault
 
             string stringIV = Convert.ToBase64String(TCPClient.generateSafeRandom(8));
 
-            byte[] byteRSA = FiokVaultClientEncrypt.RSAEncrypt(byteKey, FiokVaultClientEncrypt.getPublicParameters(File.ReadAllText("..\\..\\..\\certificate\\publickey.txt")), false);
+            byte[] byteRSA = FiokVaultClientEncrypt.RSAEncrypt(byteKey, FiokVaultClientEncrypt.getPublicParameters(PublicKeyString), false);
             string stringRSA = Convert.ToBase64String(byteRSA);
 
             FiokVaultDES des = new FiokVaultDES(byteKey);

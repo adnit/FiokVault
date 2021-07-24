@@ -43,7 +43,6 @@ namespace FiokVault
             try
             {
                 string rawResponse = TCPClient.sendMessage(command);
-                Debug.WriteLine("hello" + rawResponse);
                 int startIndex = rawResponse.IndexOf("<Shpenzimet>");
                 string response = "";
                 string userData = "";
