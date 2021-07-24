@@ -93,6 +93,8 @@ namespace FiokVault
 
         static public RSAParameters getPublicParameters(string keyString)
         {
+            // 3 5
+            // 3 - 8
             keyString = keyString.Substring(26, keyString.Length - 24 - 26);
             //Asn1Object obj = Asn1Object.FromByteArray(Convert.FromBase64String(keyString));
             Asn1Object obj = Asn1Object.FromByteArray(Convert.FromBase64String(keyString));

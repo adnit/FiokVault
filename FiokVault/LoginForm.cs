@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using FiokVaultServer;
+using System.IO;
 
 namespace FiokVault
 {
@@ -25,6 +27,47 @@ namespace FiokVault
                 usernameTxt.Text = SessionStorage.username;
                 ActiveControl = passwordTxt;
             }
+
+
+            //Client
+            string stringMessage = "testingString";
+            byte[] byteMessage = Convert.FromBase64String(stringMessage);
+
+            byte[] byteKey = TCPClient.generateSafeRandom(64);
+            string stringKey = Convert.ToBase64String(byteKey);
+
+            byte[] byteIV = TCPClient.generateSafeRandom(8);
+            string stringIV = Convert.ToBase64String(byteKey);
+
+            byte[] byteRSA = FiokVaultClientEncrypt.RSAEncrypt(byteMessage, FiokVaultClientEncrypt.getPublicParameters(File.ReadAllText("..\\..\\..\\certificate\\publickey.txt")), false);
+            string stringRSA = Convert.ToBase64String(byteRSA);
+
+            FiokVaultDES des = new FiokVaultDES(byteKey);
+            byte[] byteDes = des.Encrypt(stringMessage);
+            string stringDes = Convert.ToBase64String(byteDes);
+
+            stringMessage = Encoding.GetEncoding("ISO-8859-1")
+.GetString(byteIV) +"//+//" + Encoding.GetEncoding("ISO-8859-1")
+.GetString(byteRSA) + "//+//" + Encoding.GetEncoding("ISO-8859-1")
+.GetString(byteDes);
+            byteMessage = Convert.FromBase64String(stringMessage);
+
+        //byteMessage = Convert.FromBase64String(stringMessage);
+        // byteMessage = Convert.FromBase64String(stringRSA);
+        // byteMessage = Convert.FromBase64String(stringDes);
+
+
+            Debug.WriteLine(stringMessage);
+
+            ////Server
+            //byteMessage
+
+
+            //FiokVaultServerDecrypt fvsd = new FiokVaultServerDecrypt();
+            //string decryptedMessage = Encoding.UTF8.GetString(fvsd.decryptMessage(encryptedMessage));
+            //byte[] sentKey = fvsd.decryptedKey;
+
+
 
         }
 

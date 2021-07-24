@@ -5,13 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace FiokVault
 {
     class TCPClient
     {
         static string hostname = "127.000.000.001";
-        static Int32 port = 13001;
+        static Int32 port = 13000;
 
         public static string sendMessage(string message)
         {
@@ -26,7 +27,12 @@ namespace FiokVault
                 FiokVaultClientEncrypt fvce = new FiokVaultClientEncrypt(Key);
                 byte[] encryptedMessage = fvce.encryptMessage(data);
 
+                Debug.WriteLine(Convert.ToBase64String(encryptedMessage));
+                Debug.WriteLine(Convert.ToBase64String(encryptedMessage));
+
                 NetworkStream stream = client.GetStream();
+
+
 
                 //SEND DATA TO TCP SERVER; e qon datan
                 stream.Write(encryptedMessage, 0, encryptedMessage.Length);
@@ -58,7 +64,7 @@ namespace FiokVault
             }
         }
 
-        static byte[] generateSafeRandom(int length)
+        public static byte[] generateSafeRandom(int length)
         {
             byte[] safeRandom = new byte[length];
             RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
