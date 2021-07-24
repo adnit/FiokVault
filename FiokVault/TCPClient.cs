@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
+using System.Security.Cryptography;
+using System.Diagnostics;
 
 namespace FiokVault
 {
@@ -18,29 +20,25 @@ namespace FiokVault
             {
                 TcpClient client = new TcpClient(hostname, port);
 
-                //message -> INPUT; qikjo i shkon serverit
-                Byte[] data = Encoding.ASCII.GetBytes(message);
+                byte[] encryptedMessage = FiokVaultClientEncrypt.encryptMessage(message);
 
                 NetworkStream stream = client.GetStream();
 
-                //SEND DATA TO TCP SERVER; e qon datan
-                stream.Write(data, 0, data.Length);
+                Debug.WriteLine(encryptedMessage.Length);
+                stream.Write(encryptedMessage, 0, encryptedMessage.Length);
 
-                data = new Byte[2048];
+                byte[] data = new byte[2048];
 
-                String responseData = String.Empty;
-
-
-                //GET RESPONSE
+                String rawResponseData = String.Empty;
                 Int32 bytes = stream.Read(data, 0, data.Length);
 
-                //responseData -> OUTPUT; qita e merr prej serverit
-                responseData = Encoding.ASCII.GetString(data, 0, bytes);
+                string responseData = FiokVaultClientDecrypt.decryptMessage(data, FiokVaultClientEncrypt.byteKey);
 
+                Debug.Write(responseData);
 
                 client.GetStream().Close();
                 client.Close();
-                return responseData;       
+                return "OK";
             }
             catch (ArgumentNullException e)
             {
@@ -50,6 +48,14 @@ namespace FiokVault
             {
                 throw new Exception("Ka ndodhur nje gabim gjate lidhjes me server \nMesazhi i plote: " + e.Message);
             }
+        }
+
+        public static byte[] generateSafeRandom(int length)
+        {
+            byte[] safeRandom = new byte[length];
+            RNGCryptoServiceProvider provider = new RNGCryptoServiceProvider();
+            provider.GetBytes(safeRandom);
+            return safeRandom;
         }
     }
 }

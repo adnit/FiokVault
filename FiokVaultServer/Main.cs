@@ -25,6 +25,7 @@ namespace FiokVaultServer
         public Main()
         {
             InitializeComponent();
+
         }
 
         private void btnStartServer_Click(object sender, EventArgs e)

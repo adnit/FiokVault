@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
@@ -8,32 +9,43 @@ using System.Threading.Tasks;
 
 namespace FiokVaultServer
 {
-    class FiokVaultDecrypt
+    static class FiokVaultServerDecrypt
     {
+        static int IVLength = 8;
+        static int RSAKeyLength = 256;
         static string PrivateKeyString = File.ReadAllText("..\\..\\..\\certificate\\privkey.pem");
-
-        public byte[] decryptMessage(byte[] encryptedData)
+        public static byte[] savedDecryptedKey;
+        public static byte[] savedIV;
+        public static string decryptMessage(byte[] inputData)
         {
-            string decodedString = Encoding.UTF8.GetString(encryptedData);
-            String[] messages = decodedString.Split(",");
+            string encryptedData = Encoding.ASCII.GetString(inputData);
+            string[] inputMessage = encryptedData.Split("//+//");
+
+
+
+            byte[] IVp = Convert.FromBase64String(inputMessage[0]);
+            savedIV = IVp;
+            byte[] encryptedKey = Convert.FromBase64String(inputMessage[1]);
+            byte[] encryptedMessage = Convert.FromBase64String(inputMessage[2]);
+
 
             using (RSACryptoServiceProvider RSA = new RSACryptoServiceProvider())
             {
-                byte[] message;
-                String encryptedKey = messages[1];
+        
 
                 RSA.ImportFromPem(PrivateKeyString);
                 //Pass the data to DECRYPT, the private key information 
                 //(using RSACryptoServiceProvider.ExportParameters(true),
                 //and a boolean flag specifying no OAEP padding.
-                byte[] decryptedKey = RSADecrypt(UTF8Encoding.UTF8.GetBytes(encryptedKey), RSA.ExportParameters(true), false);
+                byte[] decryptedKey = RSADecrypt(encryptedKey, RSA.ExportParameters(true), false);
+                savedDecryptedKey = decryptedKey;
 
                 FiokVaultDES des = new FiokVaultDES(decryptedKey);
 
-                message = Encoding.ASCII.GetBytes(des.Decrypt(messages[2]));
+                
+                string message = des.Decrypt(Convert.ToBase64String(encryptedMessage));
                 //Display the decrypted plaintext to the console. 
                 //Console.WriteLine("Decrypted plaintext: {0}", ByteConverter.GetString(decryptedData));
-
                 return message;
             }
         }

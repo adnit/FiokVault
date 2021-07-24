@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Diagnostics;
+using FiokVaultServer;
+using System.IO;
+using System.Security.Cryptography;
 
 namespace FiokVault
 {
@@ -25,13 +28,8 @@ namespace FiokVault
                 usernameTxt.Text = SessionStorage.username;
                 ActiveControl = passwordTxt;
             }
-
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
@@ -45,14 +43,6 @@ namespace FiokVault
                 usernameTxt.Text = SessionStorage.username;
                 ActiveControl = passwordTxt;
             }
-        }
-
-        private void usernameTxt_TextChanged(object sender, EventArgs e)
-        {
-        }
-        private void usernameTxt_KeyDown(object sender, KeyEventArgs e)
-        {
-
         }
 
         private void removeSpaces()
@@ -116,16 +106,6 @@ namespace FiokVault
                     }
                 }
             }
-        }
-
-        private void passwordTxt_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void progressBar1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
