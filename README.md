@@ -9,4 +9,4 @@ Komunikimi mes Serverit dhe Klientit behet duke perdorur algoritme te avancuara 
 ### Punuar nga:
 - [Adnit Kamberi](https://github.com/adnit)
 - [Kastriot Salihu](https://github.com/kastriotsalihu1)
-- [Adnit Kamberi](https://github.com/LendritIbrahimi)
+- [Lendrit Ibrahimi](https://github.com/LendritIbrahimi)
